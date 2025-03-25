@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SefirHost - Premium Paket Hizmetleri</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="//code.jivosite.com/widget/iIa9rP26KO" async></script>
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --dark-color: #2d3436;
+            --light-color: #f5f6fa;
+            --success-color: #00b894;
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+        
+        .hero-section {
+            background: var(--gradient);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80') center/cover;
+            opacity: 0.1;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .service-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            background-color: white;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-header {
+            background: var(--gradient);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .service-price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+        
+        .service-features {
+            padding: 25px;
+        }
+        
+        .service-features li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .service-features li::before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--success-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        .btn-primary {
+            background: var(--gradient);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+        }
+        
+        .feature-box {
+            text-align: center;
+            padding: 30px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(108, 92, 231, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(108, 92, 231, 0); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-server me-2"></i>SefirHost
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Hizmetler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Özellikler</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Hakkımızda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">İletişim</a>
+                    </li>
+                </ul>
+                <div class="ms-3">
+                    <button class="btn btn-primary" onclick="showRegisterModal()">
+                        <i class="fas fa-user-plus me-2"></i>Kayıt Ol
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container position-relative">
+            <div class="row align-items-center">
+                <div class="col-lg-6 animate__animated animate__fadeInLeft">
+                    <h1 class="hero-title">Premium Paket Hizmetleri</h1>
+                    <p class="hero-subtitle">Web siteniz için hızlı,  Paketleriniz İçin 7/24 Destek Çözümleri</p>
+                    <a href="#services" class="btn btn-light btn-lg me-3">
+                        <i class="fas fa-eye me-2"></i>Hizmetlerimiz
+                    </a>
+                    <a href="#contact" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-headset me-2"></i>Destek
+                    </a>
+                </div>
+                <div class="col-lg-6 animate__animated animate__fadeInRight">
+                    <img src="https://images.unsplash.com/photo-1610563166150-b34df4f3bcd6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1376&q=80" class="img-fluid floating" alt="Server Illustration">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold">Hizmetlerimiz</h2>
+                <p class="lead text-muted">İhtiyacınıza uygun çözümler sunuyoruz</p>
+            </div>
+            
+            <div class="row">
+                <!-- Logo Tasarım -->
+                <div class="col-lg-4">
+                    <div class="service-card animate__animated animate__fadeInUp">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <h3>Logo Tasarım</h3>
+                            <div class="service-price">₺299/ay</div>
+                        </div>
+                        <div class="service-features">
+                            <ul>
+                                <li>Profesyonel Logo Tasarımı</li>
+                                <li>Sıfırdan Özgün Çizim</li>
+                                <li>Sınırsız Revize</li>
+                                <li>Vektörel Dosya Teslimi</li>
+                                <li>7/24 Destek</li>
+                            </ul>
+                            <button class="btn btn-primary w-100 mt-3 pulse" onclick="showPurchaseModal(1)">
+                                <i class="fas fa-shopping-cart me-2"></i>Satın Al
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Web Site Yazılım -->
+                <div class="col-lg-4">
+                    <div class="service-card animate__animated animate__fadeInUp animate__delay-1s">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3>Web Site Yazılım</h3>
+                            <div class="service-price">₺900/ay</div>
+                        </div>
+                        <div class="service-features">
+                            <ul>
+                                <li>Profesyonel Web Tasarım</li>
+                                <li>Responsive Tasarım</li>
+                                <li>SEO Optimizasyon</li>
+                                <li>7/24 Canlı Destek</li>
+                                <li>Ücretsiz Bakım</li>
+                            </ul>
+                            <button class="btn btn-primary w-100 mt-3 pulse" onclick="showPurchaseModal(2)">
+                                <i class="fas fa-shopping-cart me-2"></i>Satın Al
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Instagram Destek -->
+                <div class="col-lg-4">
+                    <div class="service-card animate__animated animate__fadeInUp animate__delay-2s">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i class="fab fa-instagram"></i>
+                            </div>
+                            <h3>Instagram Destek</h3>
+                            <div class="service-price">₺250/ay</div>
+                        </div>
+                        <div class="service-features">
+                            <ul>
+                                <li>Profesyonel Yönetim</li>
+                                <li>Hızlı Yanıt Sistemi</li>
+                                <li>7/24 Aktiflik</li>
+                                <li>Raporlama</li>
+                                <li>Kesintisiz Destek</li>
+                            </ul>
+                            <button class="btn btn-primary w-100 mt-3 pulse" onclick="showPurchaseModal(3)">
+                                <i class="fas fa-shopping-cart me-2"></i>Satın Al
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold">Neden Biz?</h2>
+                <p class="lead text-muted">SefirHost ile fark yaratın</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-box animate__animated animate__fadeIn">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Yüksek Performans</h3>
+                        <p>SSD tabanlı sunucularımız ile yüksek hız ve performans garantisi sunuyoruz.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-box animate__animated animate__fadeIn animate__delay-1s">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Güvenlik</h3>
+                        <p>Gelişmiş güvenlik önlemleri ile verileriniz her zaman güvende.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-box animate__animated animate__fadeIn animate__delay-2s">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>7/24 Destek</h3>
+                        <p>Uzman ekibimiz her zaman yanınızda. 7 gün 24 saat destek hizmeti.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" class="img-fluid rounded-3 shadow" alt="Our Team">
+                </div>
+                <div class="col-lg-6 mt-5 mt-lg-0">
+                    <h2 class="fw-bold mb-4">SefirHost Hakkında</h2>
+                    <p class="lead">10 yılı aşkın deneyimimizle sektörde lider konumdayız.</p>
+                    <p>Müşteri memnuniyetini her şeyin üzerinde tutan anlayışımızla, her geçen gün daha fazla kullanıcıya hizmet vermenin gururunu yaşıyoruz. Uzman ekibimiz ve son teknoloji altyapımızla sizlere en iyi hizmeti sunmak için çalışıyoruz.</p>
+                    <div class="d-flex align-items-center mt-4">
+                        <div class="pe-4">
+                            <h3 class="fw-bold text-primary mb-0">10K+</h3>
+                            <p class="mb-0">Mutlu Müşteri</p>
+                        </div>
+                        <div class="pe-4">
+                            <h3 class="fw-bold text-primary mb-0">99.9%</h3>
+                            <p class="mb-0">Uptime</p>
+                        </div>
+                        <div>
+                            <h3 class="fw-bold text-primary mb-0">7/24</h3>
+                            <p class="mb-0">Destek</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold">İletişim</h2>
+                <p class="lead text-muted">Bize ulaşın, size yardımcı olalım</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-lg" placeholder="Adınız">
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control form-control-lg" placeholder="E-posta Adresiniz">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-lg" placeholder="Konu">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control form-control-lg" rows="5" placeholder="Mesajınız"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="fas fa-paper-plane me-2"></i>Gönder
+                        </button>
+                    </form>
+                </div>
+                <div class="col-lg-6 mt-5 mt-lg-0">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <h3 class="fw-bold mb-4">İletişim Bilgileri</h3>
+                            <div class="d-flex align-items-start mb-4">
+                                <div class="me-3 text-primary">
+                                    <i class="fas fa-map-marker-alt fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Adres</h5>
+                                    <p class="mb-0">İstanbul, Türkiye</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-4">
+                                <div class="me-3 text-primary">
+                                    <i class="fas fa-phone-alt fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Telefon</h5>
+                                    <p class="mb-0">+90 555 123 45 67</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-4">
+                                <div class="me-3 text-primary">
+                                    <i class="fas fa-envelope fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">E-posta</h5>
+                                    <p class="mb-0">info@sefirhost.com</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start">
+                                <div class="me-3 text-primary">
+                                    <i class="fas fa-clock fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold mb-1">Çalışma Saatleri</h5>
+                                    <p class="mb-0">Pazartesi - Cumartesi: 09:00 - 18:00</p>
+                                    <div> <h5 class="fw-bold mb-1">Not!</h5>
+                                        <p class="mb-0">Sağ Alt Köşedeki Canlı Destek Sisteminden Mesaj Atmanız Rica Buyurulur</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h3 class="fw-bold mb-4">
+                        <i class="fas fa-server me-2"></i>SefirHost
+                    </h3>
+                    <p>Web siteniz için hızlı, Paketleriniz İçin Güvenli Çözümler Sunuyoruz</p>
+                    <div class="social-icons mt-4">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://discord.gg/vCuuD4vcbx"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5 class="fw-bold mb-4">Hızlı Linkler</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Anasayfa</a></li>
+                        <li class="mb-2"><a href="#services" class="text-white-50 text-decoration-none">Hizmetler</a></li>
+                        <li class="mb-2"><a href="#features" class="text-white-50 text-decoration-none">Özellikler</a></li>
+                        <li class="mb-2"><a href="#about" class="text-white-50 text-decoration-none">Hakkımızda</a></li>
+                        <li class="mb-2"><a href="#contact" class="text-white-50 text-decoration-none">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <h5 class="fw-bold mb-4">Hizmetler</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Logo Tasarım</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Web Yazılım</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Instagram Destek</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">SEO Hizmetleri</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">SSL Sertifikaları</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="fw-bold mb-4">Bültenimize Abone Olun</h5>
+                    <p>Yeni hizmetlerimiz ve kampanyalarımızdan haberdar olun.</p>
+                    <form class="mt-4">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="E-posta Adresiniz">
+                            <button class="btn btn-primary" type="button">Abone Ol</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">© 2023 SefirHost. Tüm hakları saklıdır.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">
+                        <a href="#" class="text-white-50 text-decoration-none me-3">Gizlilik Politikası</a>
+                        <a href="#" class="text-white-50 text-decoration-none">Kullanım Şartları</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Purchase Modal -->
+    <div class="modal fade" id="purchaseModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Satın Al</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="purchaseForm">
+                        <input type="hidden" id="selectedProductId">
+                        <div class="mb-3">
+                            <label class="form-label">Ürün:</label>
+                            <input type="text" class="form-control" id="selectedProductName" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fiyat:</label>
+                            <input type="text" class="form-control" id="selectedProductPrice" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ödeme Yöntemi:</label>
+                            <select class="form-select" id="paymentMethod" required>
+                                <option value="">Seçiniz</option>
+                                <option value="credit_card">Kredi Kartı</option>
+                                <option value="bank_transfer">Banka Havalesi</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="crypto">Kripto Para</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Notlar (Opsiyonel):</label>
+                            <textarea class="form-control" id="purchaseNotes" rows="2"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-shopping-cart me-2"></i>Satın Alımı Tamamla
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Giriş Yap</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label class="form-label">E-posta:</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Şifre:</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
+                        </button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p class="mb-0">Hesabınız yok mu? <a href="#" onclick="showRegisterModal()" class="text-primary">Kayıt Olun</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Kayıt Ol</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label class="form-label">Ad Soyad:</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">E-posta:</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Şifre:</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Şifre Tekrar:</label>
+                            <input type="password" class="form-control" id="registerPasswordConfirm" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="fas fa-user-plus me-2"></i>Kayıt Ol
+                        </button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p class="mb-0">Zaten hesabınız var mı? <a href="#" onclick="showLoginModal()" class="text-primary">Giriş Yapın</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="position-fixed top-0 end-0 p-3" style="z-index: 1100"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
