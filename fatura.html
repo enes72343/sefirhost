@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Fatura Sistemi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .service-card {
+            transition: all 0.3s;
+            border-left: 4px solid #4e73df;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        #invoicePreview {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .login-container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .admin-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4e73df;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Giriş Formu -->
+    <div id="loginContainer" class="login-container bg-white">
+        <h2 class="text-center mb-4"><i class="fas fa-lock me-2"></i>Admin Girişi</h2>
+        <div class="mb-3">
+            <label class="form-label">E-posta</label>
+            <input type="email" class="form-control" id="loginEmail" placeholder="Size Verilen Emaili Giriniz">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Şifre</label>
+            <input type="password" class="form-control" id="loginPassword" placeholder="Size Verilen Şifreyi Giriniz">
+        </div>
+        <button class="btn btn-primary w-100" onclick="login()">
+            <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
+        </button>
+    </div>
+
+    <!-- Ana İçerik -->
+    <div id="mainContent" class="container py-5" style="display: none;">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="fas fa-file-invoice me-2"></i>Fatura Yönetim Paneli</h1>
+            <div>
+                <span class="admin-badge"><i class="fas fa-user-shield me-1"></i>ADMIN</span>
+                <button class="btn btn-danger" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-2"></i>Çıkış Yap
+                </button>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- Logo Tasarım -->
+            <div class="col-lg-4 mb-4">
+                <div class="card service-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-paint-brush fa-3x mb-3 text-primary"></i>
+                        <h3>Logo Tasarım</h3>
+                        <div class="h4">₺299</div>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Özgün logo tasarımı</li>
+                            <li>Sınırsız revize</li>
+                            <li>Vektörel dosyalar</li>
+                        </ul>
+                        <button class="btn btn-primary btn-lg w-100 pulse" onclick="purchaseService(1)">
+                            <i class="fas fa-file-invoice me-2"></i>Fatura Kes
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Web Tasarım -->
+            <div class="col-lg-4 mb-4">
+                <div class="card service-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-code fa-3x mb-3 text-primary"></i>
+                        <h3>Web Tasarım</h3>
+                        <div class="h4">₺900</div>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Responsive tasarım</li>
+                            <li>SEO uyumlu</li>
+                            <li>1 yıl destek</li>
+                        </ul>
+                        <button class="btn btn-primary btn-lg w-100 pulse" onclick="purchaseService(2)">
+                            <i class="fas fa-file-invoice me-2"></i>Fatura Kes
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sosyal Medya -->
+            <div class="col-lg-4 mb-4">
+                <div class="card service-card h-100">
+                    <div class="card-body text-center">
+                        <i class="fab fa-instagram fa-3x mb-3 text-primary"></i>
+                        <h3>İnstagram</h3>
+                        <div class="h4">₺250</div>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Profesyonel yönetim</li>
+                            <li>İçerik üretimi</li>
+                            <li>Raporlama</li>
+                        </ul>
+                        <button class="btn btn-primary btn-lg w-100 pulse" onclick="purchaseService(3)">
+                            <i class="fas fa-file-invoice me-2"></i>Fatura Kes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="invoicePreview" class="p-4 my-4" style="display: none;"></div>
+    </div>
+
+    <!-- Müşteri Bilgileri Modalı -->
+    <div class="modal fade" id="customerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fas fa-user me-2"></i>Müşteri Bilgileri</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Ad Soyad*</label>
+                        <input type="text" class="form-control" id="customerName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">E-posta*</label>
+                        <input type="email" class="form-control" id="customerEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Telefon</label>
+                        <input type="tel" class="form-control" id="customerPhone">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>İptal
+                    </button>
+                    <button type="button" class="btn btn-primary" id="confirmPurchaseBtn">
+                        <i class="fas fa-file-invoice me-2"></i>Fatura Kes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Hizmet verileri (KDV %5 olarak hesaplanacak)
+        const services = {
+            1: { id: 1, name: "Logo Tasarım", price: 299 },  // KDV: 15 TL (Toplam: 315 TL)
+            2: { id: 2, name: "Web Tasarım", price: 900 },    // KDV: 30 TL (Toplam: 630 TL)
+            3: { id: 3, name: "Sosyal Medya Yönetimi", price: 250 } // KDV: 12.5 TL (Toplam: 262.5 TL)
+        };
+
+        // Discord Webhook URL (KENDİ WEBHOOK URL'NİZİ EKLEYİN)
+        const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1353848010735616032/V_lGzTIkpX2fvQLs7v20h2ubd_M6dSXcKta6gac1JelX3fiCm816PkWgvSwXy26-NOTI";
+
+        let currentService = null;
+        let customerData = {};
+        let invoiceData = {};
+        let isAdminLoggedIn = false;
+
+        // Giriş yap
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Sadece admin girişine izin ver
+            if (email === 'admin@gmail.com' && password === 'admin123') {
+                isAdminLoggedIn = true;
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            } else {
+                alert('Hatalı giriş! Sadece yetkili personel fatura kesebilir.');
+            }
+        }
+
+        // Çıkış yap
+        function logout() {
+            isAdminLoggedIn = false;
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('invoicePreview').style.display = 'none';
+            
+            // Formları temizle
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+
+        // Hizmet satın alma butonu
+        function purchaseService(serviceId) {
+            if (!isAdminLoggedIn) {
+                alert('Lütfen önce giriş yapınız!');
+                return;
+            }
+            
+            currentService = services[serviceId];
+            const modal = new bootstrap.Modal(document.getElementById('customerModal'));
+            modal.show();
+        }
+
+        // Satın almayı onayla
+        document.getElementById('confirmPurchaseBtn').addEventListener('click', async function() {
+            // Müşteri bilgilerini al
+            customerData = {
+                name: document.getElementById('customerName').value,
+                email: document.getElementById('customerEmail').value,
+                phone: document.getElementById('customerPhone').value || "Belirtilmemiş"
+            };
+
+            // Validasyon
+            if (!customerData.name || !customerData.email) {
+                alert("Lütfen zorunlu alanları doldurunuz!");
+                return;
+            }
+
+            // Fatura oluştur
+            await generateInvoice();
+            
+            // Modalı kapat
+            const modal = bootstrap.Modal.getInstance(document.getElementById('customerModal'));
+            modal.hide();
+            
+            // Discord'a bildirim gönder
+            await sendToDiscord();
+            
+            // Faturayı göster
+            showInvoice();
+        });
+
+        // Fatura oluştur (KDV %5 olarak hesaplanıyor)
+        async function generateInvoice() {
+            const now = new Date();
+            const kdvRate = 0.05; // %5 KDV
+            
+            invoiceData = {
+                service: currentService,
+                customer: customerData,
+                invoiceNumber: `FTR-${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2, '0')}${Math.floor(1000 + Math.random() * 9000)}`,
+                date: now.toLocaleDateString('tr-TR', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }),
+                subtotal: currentService.price,
+                kdvRate: kdvRate * 100, // % olarak
+                kdvAmount: currentService.price * kdvRate,
+                total: currentService.price * (1 + kdvRate)
+            };
+        }
+
+        // Faturayı göster
+        function showInvoice() {
+            const invoiceHTML = `
+                <div class="text-center mb-4">
+                    <h2><i class="fas fa-file-invoice me-2 text-primary"></i>FATURA</h2>
+                    <p class="text-muted">Fatura No: ${invoiceData.invoiceNumber}</p>
+                    <p class="text-muted">${invoiceData.date}</p>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5><i class="fas fa-building me-2"></i>Firma Bilgileri</h5>
+                                <hr>
+                                <p><strong>Dijital Çözümler Ltd.</strong></p>
+                                <p>Vergi No: 1234567890</p>
+                                <p>Adres: Örnek Mah. No:1 İstanbul</p>
+                                <p>Tel: 0212 123 45 67</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5><i class="fas fa-user me-2"></i>Müşteri Bilgileri</h5>
+                                <hr>
+                                <p><strong>${invoiceData.customer.name}</strong></p>
+                                <p>${invoiceData.customer.email}</p>
+                                <p>${invoiceData.customer.phone}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <table class="table table-bordered">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Hizmet</th>
+                            <th class="text-end">Tutar (₺)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${invoiceData.service.name}</td>
+                            <td class="text-end">${invoiceData.subtotal.toFixed(2)}</td>
+                        </tr>
+                        <tr>
+                            <td>KDV (%${invoiceData.kdvRate})</td>
+                            <td class="text-end">${invoiceData.kdvAmount.toFixed(2)}</td>
+                        </tr>
+                        <tr class="table-active">
+                            <td><strong>GENEL TOPLAM</strong></td>
+                            <td class="text-end"><strong>${invoiceData.total.toFixed(2)} ₺</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="alert alert-success mt-4">
+                    <i class="fas fa-check-circle me-2"></i>
+                    Fatura başarıyla oluşturuldu! Discord'a bildirim gönderildi.
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button class="btn btn-outline-primary me-2" onclick="printInvoice()">
+                        <i class="fas fa-print me-2"></i>Yazdır
+                    </button>
+                    <button class="btn btn-outline-secondary" onclick="closeInvoice()">
+                        <i class="fas fa-times me-2"></i>Kapat
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('invoicePreview').innerHTML = invoiceHTML;
+            document.getElementById('invoicePreview').style.display = 'block';
+        }
+
+        // Faturayı kapat
+        function closeInvoice() {
+            document.getElementById('invoicePreview').style.display = 'none';
+        }
+
+        // Faturayı yazdır
+        function printInvoice() {
+            const printContent = document.getElementById('invoicePreview').innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalContent;
+            showInvoice(); // Faturayı tekrar göster
+        }
+
+        // Discord'a bildirim gönder
+        async function sendToDiscord() {
+            const embed = {
+                title: "Yeni Fatura Oluşturuldu",
+                color: 0x00ff00,
+                fields: [
+                    {
+                        name: "Fatura No",
+                        value: invoiceData.invoiceNumber,
+                        inline: true
+                    },
+                    {
+                        name: "Müşteri",
+                        value: invoiceData.customer.name,
+                        inline: true
+                    },
+                    {
+                        name: "Hizmet",
+                        value: invoiceData.service.name,
+                        inline: true
+                    },
+                    {
+                        name: "Tutar",
+                        value: `${invoiceData.subtotal.toFixed(2)} ₺`,
+                        inline: true
+                    },
+                    {
+                        name: "KDV (%5)",
+                        value: `${invoiceData.kdvAmount.toFixed(2)} ₺`,
+                        inline: true
+                    },
+                    
+                    {
+                        name: "Toplam",
+                        value: `${invoiceData.total.toFixed(2)} ₺`,
+                        inline: true
+                    },
+                    {
+                        name: "Not",
+                        name: "Bu Fatura Sadece Her Müşteri İçin 1 Kez Kesilmiştir. Bu Fatura Kullanıcıya İletilir. Değiştirilmesi Veyahut Silinmesi Dahilinde Geri Atma Gibi Yönlendirmemiz Yoktur!.",
+                        value: `${invoiceData.total.toFixed(2)} ₺`,
+                        inline: true
+                    }
+                ],
+                timestamp: new Date().toISOString()
+            };
+
+            const payload = {
+                username: "Fatura Botu",
+                embeds: [embed],
+                content: `Yeni fatura kesildi: ${invoiceData.customer.name} - ${invoiceData.total.toFixed(2)} ₺`
+            };
+
+            try {
+                await fetch(DISCORD_WEBHOOK_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+            } catch (error) {
+                console.error("Discord'a bildirim gönderilemedi:", error);
+                alert("Fatura oluşturuldu ancak Discord'a bildirim gönderilemedi!");
+            }
+        }
+    </script>
+</body>
+</html>
