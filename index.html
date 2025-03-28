@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SefirCommunity -  Premium Paket Hizmetleri</title>
+    <title>SefirCommunity - Premium Paket Hizmetleri</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -16,47 +16,121 @@
             --success-color: #00b894;
             --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         }
-        .navbar-nav .nav-link {
-    padding: 0.5rem 1rem;
-    font-weight: 500;
-    color: var(--dark-color);
-    transition: all 0.3s ease;
-}
-
-.navbar-nav .nav-link:hover {
-    color: var(--primary-color);
-}
-
-/* Mobil görünüm için ayar */
-@media (max-width: 991.98px) {
-    .navbar-nav {
-        margin-top: 1rem;
-    }
-    .navbar-nav .nav-item {
-        margin-bottom: 0.5rem;
-    }
-    #authButtons, #userSection {
-        margin-top: 1rem;
-        margin-left: 0 !important;
-    }
-}
+        
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--light-color);
             color: var(--dark-color);
         }
         
+        /* Navbar Stilleri */
         .navbar {
             background-color: white;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
         }
         
         .navbar-brand {
             font-weight: 700;
             color: var(--primary-color);
             font-size: 1.8rem;
+            display: flex;
+            align-items: center;
         }
         
+        .navbar-brand i {
+            margin-right: 10px;
+        }
+        
+        .navbar-nav {
+            align-items: center;
+        }
+        
+        .navbar-nav .nav-link {
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Auth Butonları */
+        #authButtons .btn {
+            padding: 8px 20px;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        #authButtons .btn-outline-primary {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        #authButtons .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* User Section */
+        #userSection {
+            display: flex;
+            align-items: center;
+        }
+        
+        #usernameDisplay {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        /* Responsive Ayarlar */
+        @media (max-width: 991.98px) {
+            .navbar-nav {
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid rgba(0,0,0,0.1);
+            }
+            
+            .navbar-nav .nav-item {
+                margin-bottom: 0.5rem;
+            }
+            
+            #authButtons, #userSection {
+                margin-top: 1rem;
+                margin-left: 0 !important;
+                justify-content: flex-start;
+            }
+            
+            #authButtons .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            #authButtons .btn:last-child {
+                margin-bottom: 0;
+            }
+        }
+        
+        /* Hero Section */
         .hero-section {
             background: var(--gradient);
             color: white;
@@ -253,9 +327,13 @@
                         <a class="nav-link" href="#contact">İletişim</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="control.html">Ürünleriniz/Siparişleriniz</a>
+                        <a class="nav-link" href="control.html">Hesap Paneliniz</a>
                     </li>
-                </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="fatura.html">Fatura Kes</a>
+                    </li>
+
+
                 <div id="authButtons" class="ms-3">
                     <button class="btn btn-primary" onclick="showRegisterModal()">
                         <i class="fas fa-user-plus me-2"></i>Kayıt Ol
@@ -624,9 +702,14 @@
                                 <option value="crypto">Kripto Para</option>
                             </select>
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label">Notlar (Opsiyonel):</label>
                             <textarea class="form-control" id="purchaseNotes" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Kuponunuz:</label>
+                            <textarea class="form-control" id="purchaseNotes" rows="2" placeholder="Size Verilen Kupon Kodunu Giriniz (Opsiyonel)"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">
                             <i class="fas fa-shopping-cart me-2"></i>Satın Alımı Tamamla
