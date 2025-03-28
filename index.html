@@ -3,18 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SefirCommunity - Premium Paket Hizmetleri</title>
+    <title>SefirCommunity -  Premium Paket Hizmetleri</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <script>
-        window.__lc = window.__lc || {};
-        window.__lc.license = 19096657;
-        window.__lc.integration_name = "manual_onboarding";
-        window.__lc.product_name = "livechat";
-        ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
-    </script>
-    <noscript><a href="https://www.livechat.com/chat-with/19096657/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
     <style>
         :root {
             --primary-color: #6c5ce7;
@@ -24,7 +16,30 @@
             --success-color: #00b894;
             --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         }
-        
+        .navbar-nav .nav-link {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    color: var(--dark-color);
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-color);
+}
+
+/* Mobil görünüm için ayar */
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        margin-top: 1rem;
+    }
+    .navbar-nav .nav-item {
+        margin-bottom: 0.5rem;
+    }
+    #authButtons, #userSection {
+        margin-top: 1rem;
+        margin-left: 0 !important;
+    }
+}
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--light-color);
@@ -237,23 +252,35 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">İletişim</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="control.html">Hesap Paneliniz</a>
+                    </li>
                 </ul>
-                <div class="ms-3">
+                <div id="authButtons" class="ms-3">
                     <button class="btn btn-primary" onclick="showRegisterModal()">
                         <i class="fas fa-user-plus me-2"></i>Kayıt Ol
+                    </button>
+                    <button class="btn btn-outline-primary ms-2" onclick="showLoginModal()">
+                        <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
+                    </button>
+                </div>
+                <div id="userSection" style="display: none;" class="ms-3">
+                    <span class="me-3">Hoş geldiniz, <span id="usernameDisplay"></span></span>
+                    <button class="btn btn-danger" onclick="logout()">
+                        <i class="fas fa-sign-out-alt me-2"></i>Çıkış Yap
                     </button>
                 </div>
             </div>
         </div>
     </nav>
-
+    
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container position-relative">
             <div class="row align-items-center">
                 <div class="col-lg-6 animate__animated animate__fadeInLeft">
                     <h1 class="hero-title">Premium Paket Hizmetleri</h1>
-                    <p class="hero-subtitle">Web siteniz için hızlı,  Paketleriniz İçin 7/24 Destek Çözümleri</p>
+                    <p class="hero-subtitle">Web siteniz için hızlı, güvenli ve profesyonel çözümler</p>
                     <a href="#services" class="btn btn-light btn-lg me-3">
                         <i class="fas fa-eye me-2"></i>Hizmetlerimiz
                     </a>
@@ -285,7 +312,7 @@
                                 <i class="fas fa-paint-brush"></i>
                             </div>
                             <h3>Logo Tasarım</h3>
-                            <div class="service-price">₺149/Adet</div>
+                            <div class="service-price">₺299/Adet</div>
                         </div>
                         <div class="service-features">
                             <ul>
@@ -512,7 +539,7 @@
                     <h3 class="fw-bold mb-4">
                         <i class="fas fa-server me-2"></i>SefirCommunity
                     </h3>
-                    <p>Web siteniz için hızlı, Paketleriniz İçin Güvenli Çözümler Sunuyoruz</p>
+                    <p>Web siteniz için hızlı, güvenli ve profesyonel çözümler sunuyoruz</p>
                     <div class="social-icons mt-4">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -528,6 +555,7 @@
                         <li class="mb-2"><a href="#services" class="text-white-50 text-decoration-none">Hizmetler</a></li>
                         <li class="mb-2"><a href="#features" class="text-white-50 text-decoration-none">Özellikler</a></li>
                         <li class="mb-2"><a href="#about" class="text-white-50 text-decoration-none">Hakkımızda</a></li>
+                        <li class="mb-2"><a href="control.html" class="text-white-50 text-decoration-none">Hesap Bilgileriniz</a></li>
                         <li class="mb-2"><a href="#contact" class="text-white-50 text-decoration-none">İletişim</a></li>
                     </ul>
                 </div>
@@ -682,3 +710,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
+</body>
+</html>
