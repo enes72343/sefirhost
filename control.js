@@ -1,435 +1,356 @@
-// user-panel-complete.js - Tüm Kullanıcı Paneli Sistemi
+// Kupon bilgileri
+const coupons = {
+    "SEFIR20": { discount: 20, type: 'percent', description: "%20 İndirim" },
+    "SEFIR50": { discount: 50, type: 'percent', description: "%50 İndirim" },
+    "SEFIR100": { discount: 100, type: 'fixed', description: "100 TL İndirim" },
+    "WELCOME10": { discount: 10, type: 'percent', description: "Hoşgeldin %10 İndirimi" }
+};
 
-/**
- * USER MANAGER - Veri Yönetimi
- */
-class UserManager {
-    constructor() {
-      this.storageKeys = {
-        users: 'SefirCommunity_users',
-        currentUser: 'SefirCommunity_currentUser',
-        products: 'SefirCommunity_products',
-        sales: 'SefirCommunity_salesHistory'
-      };
-      this.initializeStorage();
-    }
-  
-    // Storage kontrolü ve örnek veri oluşturma
-    initializeStorage() {
-      // Tüm storage anahtarlarını kontrol et
-      const storageCheck = {
-        users: () => {
-          if (!this.getStorage('users')) {
-            this.setStorage('users', [
-              {
-                id: '1',
-                name: 'Demo Kullanıcı',
-                email: 'demo@sefircommunity.com',
-                password: 'demo123',
-                joinDate: new Date().toISOString(),
-                lastLogin: new Date().toISOString(),
-                totalPurchases: 0
-              }
-            ]);
-          }
-        },
-        products: () => {
-          if (!this.getStorage('products')) {
-            this.setStorage('products', [
-              {
-                id: 1,
-                name: "Örnek Ürün",
-                price: 100,
-                features: ["Özellik 1", "Özellik 2"],
-                category: "örnek",
-                sales: 0
-              }
-            ]);
-          }
-        },
-        sales: () => {
-          if (!this.getStorage('sales')) {
-            this.setStorage('sales', []);
-          }
-        },
-        currentUser: () => {} // currentUser boş kalabilir
-      };
-  
-      // Tüm storage'ları kontrol et
-      Object.keys(storageCheck).forEach(key => storageCheck[key]());
-    }
-  
-    // Genel storage okuma fonksiyonu
-    getStorage(key) {
-      try {
-        const item = localStorage.getItem(this.storageKeys[key]);
-        return item ? JSON.parse(item) : null;
-      } catch (error) {
-        console.error(`Storage okuma hatası (${key}):`, error);
-        return null;
-      }
-    }
-  
-    // Genel storage yazma fonksiyonu
-    setStorage(key, value) {
-      try {
-        localStorage.setItem(this.storageKeys[key], JSON.stringify(value));
-        return true;
-      } catch (error) {
-        console.error(`Storage yazma hatası (${key}):`, error);
-        return false;
-      }
-    }
-  
-    // Kullanıcı işlemleri
-    loadUsers() {
-      return this.getStorage('users') || [];
-    }
-  
-    saveUsers(users) {
-      return this.setStorage('users', users);
-    }
-  
-    loadCurrentUser() {
-      return this.getStorage('currentUser');
-    }
-  
-    saveCurrentUser(user) {
-      if (user) {
-        return this.setStorage('currentUser', user);
-      } else {
-        localStorage.removeItem(this.storageKeys.currentUser);
-        return true;
-      }
-    }
-  
-    // Ürün işlemleri
-    loadProducts() {
-      return this.getStorage('products') || [];
-    }
-  
-    saveProducts(products) {
-      return this.setStorage('products', products);
-    }
-  
-    // Satış işlemleri
-    loadSales() {
-      return this.getStorage('sales') || [];
-    }
-  
-    saveSales(sales) {
-      return this.setStorage('sales', sales);
-    }
-  
-    // Kullanıcı kayıt
-    register(name, email, password) {
-      const users = this.loadUsers();
-      
-      if (users.some(u => u.email === email)) {
-        return { success: false, message: 'Bu e-posta zaten kayıtlı!' };
-      }
-      
-      const newUser = {
-        id: Date.now().toString(),
-        name,
-        email,
-        password,
-        joinDate: new Date().toISOString(),
-        lastLogin: new Date().toISOString(),
-        totalPurchases: 0
-      };
-      
-      users.push(newUser);
-      this.saveUsers(users);
-      this.saveCurrentUser(newUser);
-      
-      return { success: true, user: newUser };
-    }
-  
-    // Kullanıcı giriş
-    login(email, password) {
-      const users = this.loadUsers();
-      const user = users.find(u => u.email === email && u.password === password);
-      
-      if (user) {
-        user.lastLogin = new Date().toISOString();
-        this.saveUsers(users);
-        this.saveCurrentUser(user);
-        return { success: true, user };
-      }
-      
-      return { success: false, message: 'E-posta veya şifre hatalı!' };
-    }
-  }
-  
-  /**
-   * USER PANEL - Arayüz Yönetimi
-   */
-  class UserPanel {
-    constructor() {
-      this.userManager = new UserManager();
-      this.currentUser = null;
-      this.init();
-    }
-  
-    // Başlangıç işlemleri
-    async init() {
-      if (!this.checkAuth()) return;
-      
-      await this.loadAllData();
-      this.setupEventListeners();
-      
-      // Verileri periyodik güncelle
-      setInterval(() => this.loadAllData(), 30000);
-    }
-  
-    // Oturum kontrolü
-    checkAuth() {
-      this.currentUser = this.userManager.loadCurrentUser();
-      
-      if (!this.currentUser) {
-        if (confirm('Giriş yapmalısınız. Giriş sayfasına yönlendirilsin mi?')) {
-          window.location.href = 'index.html#login';
-        } else {
-          window.location.href = 'index.html';
-        }
-        return false;
-      }
-      return true;
-    }
-  
-    // Tüm verileri yükle
-    async loadAllData() {
-      try {
-        await Promise.all([
-          this.loadUserData(),
-          this.loadUserOrders()
-        ]);
-      } catch (error) {
-        console.error('Veri yükleme hatası:', error);
-        this.showToast('Veriler yüklenirken hata oluştu!', 'danger');
-      }
-    }
-  
-    // Kullanıcı verilerini yükle
-    async loadUserData() {
-      if (!this.currentUser) return;
-      
-      try {
-        const elements = {
-          username: document.getElementById('usernameDisplay'),
-          email: document.getElementById('userEmailDisplay'),
-          joinDate: document.getElementById('joinDateDisplay'),
-          purchases: document.getElementById('totalPurchasesDisplay'),
-          lastLogin: document.getElementById('lastLoginDisplay')
-        };
-        
-        // Değerleri güncelle
-        if (elements.username) elements.username.textContent = this.currentUser.name || 'Bilinmiyor';
-        if (elements.email) elements.email.textContent = this.currentUser.email || 'Bilinmiyor';
-        
-        if (elements.joinDate) {
-          elements.joinDate.textContent = this.currentUser.joinDate ? 
-            new Date(this.currentUser.joinDate).toLocaleDateString('tr-TR') : 'Bilinmiyor';
-        }
-        
-        if (elements.purchases) {
-          elements.purchases.textContent = this.currentUser.totalPurchases ?? '0';
-        }
-        
-        if (elements.lastLogin) {
-          elements.lastLogin.textContent = this.currentUser.lastLogin ? 
-            new Date(this.currentUser.lastLogin).toLocaleString('tr-TR') : 'Bilinmiyor';
-        }
-      } catch (error) {
-        console.error('Kullanıcı verisi yükleme hatası:', error);
-        throw error;
-      }
-    }
-  
-    // Siparişleri yükle
-    async loadUserOrders() {
-      if (!this.currentUser) return;
-      
-      try {
-        const sales = this.userManager.loadSales();
-        if (!Array.isArray(sales)) {
-          throw new Error('Geçersiz satış verisi');
-        }
-        
-        const userOrders = sales.filter(order => order.userId === this.currentUser.id);
-        this.displayOrders(userOrders);
-      } catch (error) {
-        console.error('Sipariş yükleme hatası:', error);
-        this.showErrorState();
-        throw error;
-      }
-    }
-  
-    // Siparişleri göster
-    displayOrders(orders) {
-      const elements = {
-        table: document.getElementById('ordersTable'),
-        tableBody: document.getElementById('ordersTableBody'),
-        emptyMessage: document.getElementById('emptyOrdersMessage'),
-        count: document.getElementById('ordersCount')
-      };
-      
-      if (!orders?.length) {
-        if (elements.table) elements.table.style.display = 'none';
-        if (elements.emptyMessage) {
-          elements.emptyMessage.style.display = 'block';
-          elements.emptyMessage.className = 'alert alert-info';
-          elements.emptyMessage.textContent = 'Henüz siparişiniz yok';
-        }
-        if (elements.count) elements.count.textContent = '0';
+// Hizmet verileri (KDV %5)
+const services = {
+    1: { id: 1, name: "Logo Tasarım", price: 300 },
+    2: { id: 2, name: "Web Tasarım", price: 600 },
+    3: { id: 3, name: "Sosyal Medya Yönetimi", price: 250 }
+};
+
+// Discord Webhook URL
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/your_webhook_url";
+
+let currentService = null;
+let customerData = {};
+let invoiceData = {};
+let isAdminLoggedIn = false;
+let appliedCoupon = null;
+
+// Kupon uygula
+function applyCoupon() {
+    const couponCode = document.getElementById('couponCode').value.trim().toUpperCase();
+    
+    if (!couponCode) {
+        alert("Lütfen bir kupon kodu girin!");
         return;
-      }
-      
-      // Siparişleri sırala (yeniden eskiye)
-      orders.sort((a, b) => new Date(b.date) - new Date(a.date));
-      
-      // Tabloyu doldur
-      if (elements.tableBody) {
-        elements.tableBody.innerHTML = orders.map(order => `
-          <tr>
-            <td>${order.id || '-'}</td>
-            <td>${order.productName || '-'}</td>
-            <td>${order.price ? `${order.price}₺` : '-'}</td>
-            <td>${order.date ? new Date(order.date).toLocaleDateString('tr-TR') : '-'}</td>
-            <td><span class="badge ${this.getStatusBadgeClass(order.status)}">${this.getStatusText(order.status)}</span></td>
-            <td>
-              <button class="btn btn-sm btn-outline-primary" onclick="userPanel.viewOrderDetails('${order.id}')">
-                <i class="fas fa-eye"></i> Detay
-              </button>
-            </td>
-          </tr>
-        `).join('');
-      }
-      
-      if (elements.table) elements.table.style.display = 'table';
-      if (elements.emptyMessage) elements.emptyMessage.style.display = 'none';
-      if (elements.count) elements.count.textContent = orders.length.toString();
     }
-  
-    // Sipariş detaylarını göster
-    viewOrderDetails(orderId) {
-      try {
-        const order = this.userManager.loadSales().find(o => o.id === orderId);
-        if (!order) {
-          this.showToast('Sipariş bulunamadı!', 'danger');
-          return;
+    
+    if (coupons[couponCode]) {
+        appliedCoupon = coupons[couponCode];
+        alert(`Kupon uygulandı: ${appliedCoupon.description}`);
+        updatePriceDisplay();
+    } else {
+        alert("Geçersiz kupon kodu!");
+        appliedCoupon = null;
+        updatePriceDisplay();
+    }
+}
+
+// Fiyat görünümünü güncelle
+function updatePriceDisplay() {
+    if (!currentService) return;
+    
+    const originalPrice = currentService.price;
+    let discountAmount = 0;
+    let discountedPrice = originalPrice;
+    
+    if (appliedCoupon) {
+        if (appliedCoupon.type === 'percent') {
+            discountAmount = originalPrice * (appliedCoupon.discount / 100);
+        } else {
+            discountAmount = appliedCoupon.discount;
         }
+        discountedPrice = originalPrice - discountAmount;
         
-        // Modal içeriğini doldur
-        const setText = (id, value) => {
-          const el = document.getElementById(id);
-          if (el) el.textContent = value || '-';
-        };
-        
-        setText('orderIdDetail', order.id);
-        setText('productNameDetail', order.productName);
-        setText('orderDateDetail', order.date ? new Date(order.date).toLocaleString('tr-TR') : null);
-        setText('orderPriceDetail', order.price ? `${order.price}₺` : null);
-        
-        const statusEl = document.getElementById('orderStatusDetail');
-        if (statusEl) {
-          statusEl.innerHTML = `<span class="badge ${this.getStatusBadgeClass(order.status)}">${this.getStatusText(order.status)}</span>`;
+        // Fiyat negatif olmasın
+        if (discountedPrice < 0) discountedPrice = 0;
+    }
+    
+    document.getElementById('originalPrice').textContent = `${originalPrice.toFixed(2)} ₺`;
+    document.getElementById('discountedPrice').textContent = `${discountedPrice.toFixed(2)} ₺`;
+    
+    if (appliedCoupon) {
+        document.getElementById('discountInfo').style.display = 'block';
+        document.getElementById('discountAmount').textContent = `-${discountAmount.toFixed(2)} ₺`;
+        document.getElementById('couponDescription').textContent = appliedCoupon.description;
+    } else {
+        document.getElementById('discountInfo').style.display = 'none';
+    }
+}
+
+// Fatura oluştur (KDV %5 + kupon desteği)
+async function generateInvoice() {
+    const now = new Date();
+    const kdvRate = 0.05; // %5 KDV
+    
+    // Orijinal fiyat
+    const originalPrice = currentService.price;
+    
+    // İndirim hesapla
+    let discountAmount = 0;
+    if (appliedCoupon) {
+        if (appliedCoupon.type === 'percent') {
+            discountAmount = originalPrice * (appliedCoupon.discount / 100);
+        } else {
+            discountAmount = appliedCoupon.discount;
         }
-        
-        setText('paymentMethodDetail', order.paymentMethod);
-        setText('orderNotesDetail', order.notes || 'Not yok');
-        
-        // Modalı göster
-        this.showModal('orderDetailsModal');
-      } catch (error) {
-        console.error('Sipariş detay hatası:', error);
-        this.showToast('Sipariş detayı gösterilemedi!', 'danger');
-      }
     }
-  
-    // Hata durumunda arayüzü ayarla
-    showErrorState() {
-      const elements = {
-        table: document.getElementById('ordersTable'),
-        emptyMessage: document.getElementById('emptyOrdersMessage')
-      };
-      
-      if (elements.table) elements.table.style.display = 'none';
-      if (elements.emptyMessage) {
-        elements.emptyMessage.style.display = 'block';
-        elements.emptyMessage.className = 'alert alert-danger';
-        elements.emptyMessage.textContent = 'Siparişler yüklenirken hata oluştu';
-      }
+    
+    // İndirimli fiyat (negatif olmasın)
+    const discountedPrice = Math.max(0, originalPrice - discountAmount);
+    
+    // KDV hesapla (indirimli fiyat üzerinden)
+    const kdvAmount = discountedPrice * kdvRate;
+    const total = discountedPrice + kdvAmount;
+    
+    invoiceData = {
+        service: currentService,
+        customer: customerData,
+        coupon: appliedCoupon ? {
+            code: document.getElementById('couponCode').value.trim().toUpperCase(),
+            description: appliedCoupon.description,
+            discountAmount: discountAmount
+        } : null,
+        invoiceNumber: `FTR-${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2, '0')}${Math.floor(1000 + Math.random() * 9000)}`,
+        date: now.toLocaleDateString('tr-TR', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        }),
+        originalPrice: originalPrice,
+        discountedPrice: discountedPrice,
+        kdvRate: kdvRate * 100, // % olarak
+        kdvAmount: kdvAmount,
+        total: total
+    };
+}
+
+// Discord'a bildirim gönder (kupon bilgisi eklendi)
+async function sendToDiscord() {
+    const embed = {
+        title: "Yeni Fatura Oluşturuldu",
+        color: 0x00ff00,
+        fields: [
+            {
+                name: "Fatura No",
+                value: invoiceData.invoiceNumber,
+                inline: true
+            },
+            {
+                name: "Müşteri",
+                value: invoiceData.customer.name,
+                inline: true
+            },
+            {
+                name: "Hizmet",
+                value: invoiceData.service.name,
+                inline: true
+            },
+            {
+                name: "Orijinal Fiyat",
+                value: `${invoiceData.originalPrice.toFixed(2)} ₺`,
+                inline: true
+            }
+        ],
+        timestamp: new Date().toISOString()
+    };
+
+    // Kupon bilgisi eklendi
+    if (invoiceData.coupon) {
+        embed.fields.push({
+            name: "Kupon İndirimi",
+            value: `${invoiceData.coupon.description}\n-${invoiceData.coupon.discountAmount.toFixed(2)} ₺`,
+            inline: true
+        });
     }
-  
-    // Çıkış yap
-    logout() {
-      this.userManager.saveCurrentUser(null);
-      window.location.href = 'index.html';
+
+    embed.fields.push(
+        {
+            name: "KDV (%5)",
+            value: `${invoiceData.kdvAmount.toFixed(2)} ₺`,
+            inline: true
+        },
+        {
+            name: "Toplam",
+            value: `${invoiceData.total.toFixed(2)} ₺`,
+            inline: true
+        }
+    );
+
+    const payload = {
+        username: "Fatura Botu",
+        embeds: [embed],
+        content: `Yeni fatura kesildi: ${invoiceData.customer.name} - ${invoiceData.total.toFixed(2)} ₺`
+    };
+
+    try {
+        await fetch(DISCORD_WEBHOOK_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+    } catch (error) {
+        console.error("Discord'a bildirim gönderilemedi:", error);
     }
-  
-    // Yardımcı fonksiyonlar
-    getStatusText(status) {
-      const statusMap = {
-        'pending': 'Beklemede',
-        'processing': 'İşleniyor',
-        'completed': 'Tamamlandı',
-        'cancelled': 'İptal Edildi',
-        'refunded': 'İade Edildi'
-      };
-      return statusMap[status] || status || 'Belirsiz';
-    }
-  
-    getStatusBadgeClass(status) {
-      const classMap = {
-        'pending': 'bg-warning',
-        'processing': 'bg-info',
-        'completed': 'bg-success',
-        'cancelled': 'bg-danger',
-        'refunded': 'bg-secondary'
-      };
-      return classMap[status] || 'bg-primary';
-    }
-  
-    // Modal göster
-    showModal(modalId) {
-      const modal = new bootstrap.Modal(document.getElementById(modalId));
-      modal.show();
-    }
-  
-    // Toast mesajı göster
-    showToast(message, type = 'info') {
-      const toastContainer = document.getElementById('toastContainer') || document.body;
-      
-      const toast = document.createElement('div');
-      toast.className = `toast show align-items-center text-white bg-${type} border-0`;
-      toast.style.position = 'fixed';
-      toast.style.top = '20px';
-      toast.style.right = '20px';
-      toast.style.zIndex = '1100';
-      toast.innerHTML = `
-        <div class="d-flex">
-          <div class="toast-body">${message}</div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+}
+
+// Fatura göster (kupon bilgisi eklendi)
+function showInvoice() {
+    const invoiceHTML = `
+        <div class="text-center mb-4">
+            <h2><i class="fas fa-file-invoice me-2 text-primary"></i>FATURA</h2>
+            <p class="text-muted">Fatura No: ${invoiceData.invoiceNumber}</p>
+            <p class="text-muted">${invoiceData.date}</p>
         </div>
-      `;
-      
-      toastContainer.appendChild(toast);
-      
-      setTimeout(() => toast.remove(), 5000);
+        
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h5><i class="fas fa-building me-2"></i>Firma Bilgileri</h5>
+                        <hr>
+                        <p><strong>Dijital Çözümler Ltd.</strong></p>
+                        <p>Vergi No: 1234567890</p>
+                        <p>Adres: Örnek Mah. No:1 İstanbul</p>
+                        <p>Tel: 0212 123 45 67</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h5><i class="fas fa-user me-2"></i>Müşteri Bilgileri</h5>
+                        <hr>
+                        <p><strong>${invoiceData.customer.name}</strong></p>
+                        <p>${invoiceData.customer.email}</p>
+                        <p>${invoiceData.customer.phone}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <table class="table table-bordered">
+            <thead class="table-primary">
+                <tr>
+                    <th>Hizmet</th>
+                    <th class="text-end">Tutar (₺)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${invoiceData.service.name}</td>
+                    <td class="text-end">${invoiceData.originalPrice.toFixed(2)}</td>
+                </tr>
+                ${invoiceData.coupon ? `
+                <tr class="table-warning">
+                    <td>Kupon İndirimi (${invoiceData.coupon.description})</td>
+                    <td class="text-end">-${invoiceData.coupon.discountAmount.toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td>İndirimli Tutar</td>
+                    <td class="text-end">${invoiceData.discountedPrice.toFixed(2)}</td>
+                </tr>
+                ` : ''}
+                <tr>
+                    <td>KDV (%${invoiceData.kdvRate})</td>
+                    <td class="text-end">${invoiceData.kdvAmount.toFixed(2)}</td>
+                </tr>
+                <tr class="table-active">
+                    <td><strong>GENEL TOPLAM</strong></td>
+                    <td class="text-end"><strong>${invoiceData.total.toFixed(2)} ₺</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="alert alert-success mt-4">
+            <i class="fas fa-check-circle me-2"></i>
+            Fatura başarıyla oluşturuldu! Discord'a bildirim gönderildi.
+        </div>
+        
+        <div class="text-center mt-4">
+            <button class="btn btn-outline-primary me-2" onclick="printInvoice()">
+                <i class="fas fa-print me-2"></i>Yazdır
+            </button>
+            <button class="btn btn-outline-secondary" onclick="closeInvoice()">
+                <i class="fas fa-times me-2"></i>Kapat
+            </button>
+        </div>
+    `;
+    
+    document.getElementById('invoicePreview').innerHTML = invoiceHTML;
+    document.getElementById('invoicePreview').style.display = 'block';
+}
+
+// Satın alma formu submit işlemi
+document.getElementById('purchaseForm')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Müşteri bilgilerini al
+    customerData = {
+        name: document.getElementById('customerName').value,
+        email: document.getElementById('customerEmail').value,
+        phone: document.getElementById('customerPhone').value || "Belirtilmemiş"
+    };
+
+    // Validasyon
+    if (!customerData.name || !customerData.email) {
+        alert("Lütfen zorunlu alanları doldurunuz!");
+        return;
     }
-  
-    // Event listener'ları ayarla
-    setupEventListeners() {
-      const logoutBtn = document.getElementById('logoutBtn');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => this.logout());
-      }
+
+    // Kupon kodunu al (textarea'dan)
+    const couponCode = document.getElementById('purchaseNotes').value.trim().toUpperCase();
+    
+    // Kupon kontrolü
+    if (couponCode && coupons[couponCode]) {
+        appliedCoupon = coupons[couponCode];
+    } else if (couponCode) {
+        alert("Geçersiz kupon kodu: " + couponCode);
+        appliedCoupon = null;
+    } else {
+        appliedCoupon = null;
     }
-  }
-  
-  // Sayfa yüklendiğinde başlat
-  document.addEventListener('DOMContentLoaded', () => {
-    window.userPanel = new UserPanel();
-  });
+
+    // Fatura oluştur
+    await generateInvoice();
+    
+    // Discord'a bildirim gönder
+    await sendToDiscord();
+    
+    // Faturayı göster
+    showInvoice();
+    
+    // Modalı kapat
+    const modal = bootstrap.Modal.getInstance(document.getElementById('purchaseModal'));
+    modal.hide();
+});
+
+// Faturayı kapat
+function closeInvoice() {
+    document.getElementById('invoicePreview').style.display = 'none';
+}
+
+// Faturayı yazdır
+function printInvoice() {
+    const printContent = document.getElementById('invoicePreview').innerHTML;
+    const originalContent = document.body.innerHTML;
+    
+    document.body.innerHTML = printContent;
+    window.print();
+    document.body.innerHTML = originalContent;
+    showInvoice(); // Faturayı tekrar göster
+}
+
+// Admin kontrolü
+function checkAdminAccess() {
+    const currentUser = JSON.parse(localStorage.getItem('SefirCommunity_currentUser'));
+    return currentUser && currentUser.email === 'admin@gmail.com' && currentUser.password === 'admin123';
+}
+
+// Kupon alanı için HTML örneği:
+/*
+<div class="mb-3">
+    <label class="form-label">Kuponunuz:</label>
+    <textarea class="form-control" id="purchaseNotes" rows="2" placeholder="SEFIR20, SEFIR50 gibi kupon kodlarınızı girin"></textarea>
+</div>
+*/
