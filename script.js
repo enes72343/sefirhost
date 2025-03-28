@@ -800,3 +800,461 @@ function handlePurchase(e) {
     
     showToast('Satın alma işlemi başarıyla tamamlandı! Yönlendiriliyorsunuz...', 'success');
 }
+// Admin kontrolü için fonksiyon
+function checkAdminAccess() {
+    const currentUser = JSON.parse(localStorage.getItem('SefirCommunity_currentUser'));
+    
+    // Eğer kullanıcı admin değilse
+    if (!currentUser || currentUser.email !== 'admin@gmail.com' || currentUser.password !== 'admin123') {
+        alert('Yetkisiz erişim! Bu sayfayı görüntüleme izniniz yok.');
+        window.location.href = 'index.html'; // Ana sayfaya yönlendir
+        return false;
+    }
+    return true;
+}
+
+// Admin paneli linkine tıklama olayını ekle
+document.querySelector('.nav-link[href="admin.html"]')?.addEventListener('click', function(e) {
+    if (!checkAdminAccess()) {
+        e.preventDefault(); // Linkin çalışmasını engelle
+    }
+});
+
+// Sayfa yüklendiğinde admin.html için kontrol yap
+if (window.location.pathname.includes('admin.html') && !checkAdminAccess()) {
+    // checkAdminAccess zaten yönlendirme yapacak
+}
+// Admin kontrolü için merkezi fonksiyon
+function checkAdminAccess() {
+    // 1. LocalStorage'dan kullanıcıyı al
+    const userData = localStorage.getItem('SefirCommunity_currentUser');
+    
+    // 2. Eğer hiç giriş yapılmamışsa (guest)
+    if (!userData) {
+        alert('Bu sayfaya erişmek için giriş yapmalısınız!');
+        window.location.href = 'index.html'; // Giriş sayfasına yönlendir
+        return false;
+    }
+    
+    // 3. Kullanıcı varsa parse et
+    const currentUser = JSON.parse(userData);
+    
+    // 4. Admin kontrolü (email ve şifre kontrolü)
+    const isAdmin = currentUser.email === 'admin@gmail.com' && currentUser.password === 'admin123';
+    
+    if (!isAdmin) {
+        alert('Bu sayfa sadece yöneticiler içindir!');
+        window.location.href = 'index.html'; // Ana sayfaya yönlendir
+        return false;
+    }
+    
+    return true;
+}
+
+// Admin linkini ayarla
+function setupAdminLink() {
+    const adminContainer = document.getElementById('adminLinkContainer');
+    if (!adminContainer) return;
+
+    // LocalStorage kontrolü
+    const userData = localStorage.getItem('SefirCommunity_currentUser');
+    if (!userData) {
+        adminContainer.style.display = 'none';
+        return;
+    }
+
+    const currentUser = JSON.parse(userData);
+    const isAdmin = currentUser.email === 'admin@gmail.com' && currentUser.password === 'admin123';
+    
+    // Sadece admin görsün
+    adminContainer.style.display = isAdmin ? 'block' : 'none';
+
+    // Linke tıklama olayı
+    const adminLink = document.getElementById('adminLink');
+    if (adminLink) {
+        adminLink.addEventListener('click', (e) => {
+            if (!isAdmin) {
+                e.preventDefault();
+                alert('Yetkisiz erişim!');
+                window.location.href = 'index.html';
+            }
+        });
+    }
+}
+
+// Sayfa yüklendiğinde çalışacaklar
+document.addEventListener('DOMContentLoaded', () => {
+    // Admin linkini ayarla
+    setupAdminLink();
+    
+    // Eğer admin sayfasındaysa ekstra kontrol yap
+    if (window.location.pathname.includes('admin.html')) {
+        checkAdminAccess(); // Bu fonksiyon zaten yönlendirme yapacak
+    }
+});
+// Kullanıcı verilerini yönetmek için nesne
+const UserManagerBaba = {
+    // LocalStorage'dan kullanıcıları yükle
+    loadUsers: function() {
+        const users = localStorage.getItem('SefirCommunity_users');
+        return users ? JSON.parse(users) : [];
+    },
+    
+    // LocalStorage'a kullanıcıları kaydet
+    saveUsers: function(users) {
+        localStorage.setItem('SefirCommunity_users', JSON.stringify(users));
+    },
+    
+    // Giriş yapmış kullanıcıyı yükle
+    loadCurrentUser: function() {
+        const user = localStorage.getItem('SefirCommunity_currentUser');
+        return user ? JSON.parse(user) : null;
+    },
+    
+    // Giriş yapmış kullanıcıyı kaydet
+    saveCurrentUser: function(user) {
+        if (user) {
+            localStorage.setItem('SefirCommunity_currentUser', JSON.stringify(user));
+        } else {
+            localStorage.removeItem('SefirCommunity_currentUser');
+        }
+    },
+    
+    // Kullanıcı kaydı
+    register: function(name, email, password) {
+        const users = this.loadUsers();
+        
+        // E-posta kontrolü
+        if (users.some(u => u.email === email)) {
+            return { success: false, message: 'Bu e-posta adresi zaten kayıtlı!' };
+        }
+        
+        const newUser = {
+            id: Date.now(),
+            name,
+            email,
+            password,
+            joinDate: new Date().toISOString(),
+            totalPurchases: 0
+        };
+        
+        users.push(newUser);
+        this.saveUsers(users);
+        this.saveCurrentUser(newUser);
+        
+        // Discord'a kayıt bildirimi gönder
+        this.sendRegistrationToDiscord(newUser);
+        
+        return { success: true, user: newUser };
+    },
+    
+    // Giriş işlemi
+    login: function(email, password) {
+        const users = this.loadUsers();
+        const user = users.find(u => u.email === email && u.password === password);
+        
+        if (user) {
+            this.saveCurrentUser(user);
+            return { success: true, user };
+        }
+        
+        return { success: false, message: 'E-posta veya şifre hatalı!' };
+    },
+    
+    // Çıkış işlemi
+    logout: function() {
+        this.saveCurrentUser(null);
+    },
+    
+    // Kullanıcı giriş durumunu kontrol et
+    isLoggedIn: function() {
+        return this.loadCurrentUser() !== null;
+    },
+    
+    // Mevcut kullanıcıyı getir
+    getCurrentUser: function() {
+        return this.loadCurrentUser();
+    },
+    
+    // Discord'a kayıt bildirimi gönder
+    sendRegistrationToDiscord: function(user) {
+        const DISCORD_REG_WEBHOOK = 'https://discord.com/api/webhooks/1353848010735616032/V_lGzTIkpX2fvQLs7v20h2ubd_M6dSXcKta6gac1JelX3fiCm816PkWgvSwXy26-NOTI';
+        
+        const embed = {
+            title: "Yeni Kullanıcı Kaydı!",
+            color: 0x3498db,
+            fields: [
+                { name: "Ad", value: user.name, inline: true },
+                { name: "E-posta", value: user.email, inline: true },
+                { name: "Kayıt Tarihi", value: new Date(user.joinDate).toLocaleString(), inline: false }
+            ],
+            timestamp: new Date().toISOString()
+        };
+        
+        fetch(DISCORD_REG_WEBHOOK, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                content: "📢 Yeni kullanıcı kaydı!",
+                embeds: [embed] 
+            }),
+        }).catch(error => console.error('Discord webhook error:', error));
+    },
+    
+    // Satın alma işlemi ve fatura oluşturma
+    purchaseProduct: function(productId, productName, price) {
+        const currentUser = this.getCurrentUser();
+        if (!currentUser) {
+            return { success: false, message: 'Satın almak için giriş yapmalısınız!' };
+        }
+        
+        // Fatura oluştur
+        const invoiceNumber = 'INV-' + Date.now();
+        const invoiceDate = new Date().toLocaleDateString('tr-TR');
+        const kdv = price * 0.18;
+        const total = price + kdv;
+        
+        const invoiceData = {
+            invoiceNumber,
+            date: invoiceDate,
+            customer: {
+                name: currentUser.name,
+                email: currentUser.email
+            },
+            product: {
+                id: productId,
+                name: productName,
+                price: price
+            },
+            totals: {
+                subtotal: price,
+                kdv: kdv,
+                total: total
+            }
+        };
+        
+        // Satış geçmişine ekle
+        const users = this.loadUsers();
+        const userIndex = users.findIndex(u => u.id === currentUser.id);
+        if (userIndex !== -1) {
+            users[userIndex].totalPurchases += 1;
+            if (!users[userIndex].purchases) {
+                users[userIndex].purchases = [];
+            }
+            users[userIndex].purchases.push(invoiceData);
+            this.saveUsers(users);
+            this.saveCurrentUser(users[userIndex]);
+        }
+        
+        // Discord'a fatura bildirimi gönder
+        this.sendInvoiceToDiscord(invoiceData);
+        
+        return { 
+            success: true, 
+            message: 'Satın alma işlemi başarılı! Fatura oluşturuldu.',
+            invoice: invoiceData
+        };
+    },
+    
+    // Discord'a fatura bildirimi gönder
+    sendInvoiceToDiscord: function(invoiceData) {
+        const DISCORD_INV_WEBHOOK = 'https://discord.com/api/webhooks/1353848010735616032/V_lGzTIkpX2fvQLs7v20h2ubd_M6dSXcKta6gac1JelX3fiCm816PkWgvSwXy26-NOTI';
+        
+        const embed = {
+            title: "Yeni Fatura Oluşturuldu!",
+            color: 0x00ff00,
+            fields: [
+                { name: "Fatura No", value: invoiceData.invoiceNumber, inline: true },
+                { name: "Müşteri", value: invoiceData.customer.name, inline: true },
+                { name: "Ürün", value: invoiceData.product.name, inline: true },
+                { name: "Fiyat", value: `${invoiceData.product.price}₺`, inline: true },
+                { name: "KDV (%5)", value: `${invoiceData.totals.kdv.toFixed(2)}₺`, inline: true },
+                { name: "Toplam", value: `${invoiceData.totals.total.toFixed(2)}₺`, inline: true }
+            ],
+            timestamp: new Date().toISOString()
+        };
+        
+        fetch(DISCORD_INV_WEBHOOK, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                content: "🧾 Yeni fatura oluşturuldu!",
+                embeds: [embed] 
+            }),
+        }).catch(error => console.error('Discord webhook error:', error));
+    },
+    
+    // Admin kontrolü
+    isAdmin: function() {
+        const currentUser = this.getCurrentUser();
+        return currentUser && currentUser.email === 'admin@gmail.com' && currentUser.password === 'admin123';
+    }
+};
+
+// Sayfa yüklendiğinde çalışacak fonksiyon
+document.addEventListener('DOMContentLoaded', function() {
+    // Kullanıcı giriş durumunu kontrol et ve arayüzü güncelle
+    updateAuthUI();
+    
+    // Admin linkini göster/gizle
+    if (UserManager.isAdmin()) {
+        document.getElementById('adminLink').style.display = 'block';
+    } else {
+        document.getElementById('adminLink').style.display = 'none';
+    }
+    
+    // Satın alma butonlarına event ekle
+    document.querySelectorAll('.purchase-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const productId = this.dataset.productId;
+            const productName = this.dataset.productName;
+            const productPrice = parseFloat(this.dataset.productPrice);
+            
+            const result = UserManager.purchaseProduct(productId, productName, productPrice);
+            if (result.success) {
+                showToast(result.message, 'success');
+                // Faturayı göster
+                showInvoice(result.invoice);
+                // Yönlendirme yap
+                setTimeout(() => {
+                    window.location.href = "https://shopier.com/sefirroleplay";
+                }, 3000);
+            } else {
+                showToast(result.message, 'danger');
+                showLoginModal();
+            }
+        });
+    });
+});
+
+// Faturayı göster
+function showInvoice(invoiceData) {
+    const invoicePreview = document.getElementById('invoicePreview');
+    invoicePreview.innerHTML = `
+        <div class="invoice-container">
+            <h3>Fatura Detayları</h3>
+            <p><strong>Fatura No:</strong> ${invoiceData.invoiceNumber}</p>
+            <p><strong>Tarih:</strong> ${invoiceData.date}</p>
+            <hr>
+            <h4>Müşteri Bilgileri</h4>
+            <p><strong>Ad:</strong> ${invoiceData.customer.name}</p>
+            <p><strong>E-posta:</strong> ${invoiceData.customer.email}</p>
+            <hr>
+            <h4>Ürün Bilgileri</h4>
+            <p><strong>Ürün Adı:</strong> ${invoiceData.product.name}</p>
+            <p><strong>Birim Fiyat:</strong> ${invoiceData.product.price.toFixed(2)}₺</p>
+            <hr>
+            <h4>Özet</h4>
+            <p><strong>Ara Toplam:</strong> ${invoiceData.totals.subtotal.toFixed(2)}₺</p>
+            <p><strong>KDV (%18):</strong> ${invoiceData.totals.kdv.toFixed(2)}₺</p>
+            <p><strong>Genel Toplam:</strong> ${invoiceData.totals.total.toFixed(2)}₺</p>
+            <hr>
+            <p class="text-muted">Fatura otomatik olarak sistemimize kaydedilmiştir.</p>
+        </div>
+    `;
+    invoicePreview.style.display = 'block';
+}
+
+// Diğer fonksiyonlar (updateAuthUI, showToast, showLoginModal vb.) önceki gibi kalacak
+/**
+ * Satın Alma ve Fatura Yönetimi
+ * - Kullanıcı ürün satın aldığında otomatik fatura keser
+ * - Fatura bilgilerini Discord webhook'a gönderir
+ */
+
+const faturaSistemi = {
+    // Webhook URL'si
+    webhookUrl: "https://discord.com/api/webhooks/1353848010735616032/V_lGzTIkpX2fvQLs7v20h2ubd_M6dSXcKta6gac1JelX3fiCm816PkWgvSwXy26-NOTI",
+  
+    // Fatura oluştur
+    faturaOlustur: function(kullanici, urun, miktar = 1) {
+      const kdvOrani = 0.5; // %18 KDV
+      const kdvTutari = urun.fiyat * miktar * kdvOrani;
+      const genelToplam = (urun.fiyat * miktar) + kdvTutari;
+  
+      return {
+        faturaNo: `FTR-${Date.now()}`,
+        tarih: new Date().toLocaleDateString('tr-TR'),
+        musteri: {
+          ad: kullanici.ad,
+          email: kullanici.email,
+          id: kullanici.id
+        },
+        urun: {
+          ad: urun.ad,
+          birimFiyat: urun.fiyat,
+          miktar: miktar
+        },
+        odeme: {
+          araToplam: (urun.fiyat * miktar).toFixed(2),
+          kdv: kdvTutari.toFixed(2),
+          toplam: genelToplam.toFixed(2)
+        },
+        durum: "Ödeme Bekliyor"
+      };
+    },
+  
+    // Discord'a fatura gönder
+    faturaGonder: async function(fatura) {
+      const embed = {
+        title: "YENİ FATURA OLUŞTURULDU",
+        color: 0x00ff00,
+        fields: [
+          { name: "Fatura No", value: fatura.faturaNo, inline: true },
+          { name: "Müşteri", value: fatura.musteri.ad, inline: true },
+          { name: "Ürün", value: fatura.urun.ad, inline: true },
+          { name: "Miktar", value: fatura.urun.miktar, inline: true },
+          { name: "Birim Fiyat", value: `${fatura.urun.birimFiyat}₺`, inline: true },
+          { name: "Ara Toplam", value: `${fatura.odeme.araToplam}₺`, inline: true },
+          { name: "KDV (%18)", value: `${fatura.odeme.kdv}₺`, inline: true },
+          { name: "Genel Toplam", value: `${fatura.odeme.toplam}₺`, inline: true },
+          { name: "Durum", value: fatura.durum, inline: true }
+        ],
+        timestamp: new Date().toISOString()
+      };
+  
+      try {
+        await fetch(this.webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ embeds: [embed] })
+        });
+        console.log("Fatura Discord'a gönderildi!");
+      } catch (error) {
+        console.error("Webhook gönderilemedi:", error);
+      }
+    },
+  
+    // Satın alma işlemini gerçekleştir
+    satinAl: function(kullanici, urun, miktar = 1) {
+      // 1. Fatura oluştur
+      const fatura = this.faturaOlustur(kullanici, urun, miktar);
+      
+      // 2. Discord'a bildirim gönder
+      this.faturaGonder(fatura);
+      
+      // 3. Faturayı kaydet (isteğe bağlı)
+      this.faturaKaydet(fatura);
+      
+      return fatura;
+    },
+  
+    // Faturayı localStorage'a kaydet (isteğe bağlı)
+    faturaKaydet: function(fatura) {
+      const faturalar = JSON.parse(localStorage.getItem('faturalar') || '[]');
+      faturalar.push(fatura);
+      localStorage.setItem('faturalar', JSON.stringify(faturalar));
+    }
+  };
+  
+
+  
+
+  // Satın alma işlemi yap
+  const fatura = faturaSistemi.satinAl(ornekKullanici, ornekUrun, 1);
+  console.log("Oluşturulan fatura:", fatura);
+  
