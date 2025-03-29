@@ -3,528 +3,1390 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SefirCommunity - Premium Paket Hizmetleri</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>SefirCommunity - Profesyonel Dijital Çözümler</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #6c5ce7;
-            --secondary-color: #a29bfe;
-            --dark-color: #2d3436;
-            --light-color: #f5f6fa;
-            --success-color: #00b894;
-            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        }
+    /* MODERN VE GÖZ ALICI CSS TASARIMI */
+    :root {
+        /* RENK PALETİ */
+        --primary-400: #818cf8;
+        --primary-500: #6366f1;
+        --primary-600: #4f46e5;
+        --primary-700: #4338ca;
+        --accent-400: #2dd4bf;
+        --accent-500: #14b8a6;
+        --accent-600: #0d9488;
+        --dark-900: #0f172a;
+        --dark-800: #1e293b;
+        --light-50: #f8fafc;
+        --light-100: #f1f5f9;
+        --gray-400: #94a3b8;
+        --gray-500: #64748b;
+        --success-400: #4ade80;
+        --success-500: #22c55e;
+        --danger-400: #f87171;
+        --danger-500: #ef4444;
+        --white: #ffffff;
         
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light-color);
-            color: var(--dark-color);
-        }
+        /* TİPOGRAFİ */
+        --font-main: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-heading: 'Montserrat', var(--font-main);
         
-        /* Navbar Stilleri */
-        .navbar {
-            background-color: white;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            padding: 15px 0;
-        }
+        /* BOYUTLAR */
+        --space-3xs: 0.25rem;
+        --space-2xs: 0.5rem;
+        --space-xs: 0.75rem;
+        --space-sm: 1rem;
+        --space-md: 1.5rem;
+        --space-lg: 2rem;
+        --space-xl: 3rem;
+        --space-2xl: 4rem;
+        --space-3xl: 6rem;
         
-        .navbar-brand {
-            font-weight: 700;
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-        }
+        /* KENAR YUVARLAKLIKLARI */
+        --radius-sm: 0.375rem;
+        --radius-md: 0.5rem;
+        --radius-lg: 0.75rem;
+        --radius-xl: 1rem;
+        --radius-2xl: 1.5rem;
+        --radius-full: 9999px;
         
-        .navbar-brand i {
-            margin-right: 10px;
-        }
+        /* GÖLGELER */
+        --shadow-xs: 0 1px 2px 0 rgba(0,0,0,0.05);
+        --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        --shadow-2xl: 0 25px 50px -12px rgba(0,0,0,0.25);
+        --shadow-primary: 0 4px 14px 0 rgba(99, 102, 241, 0.38);
         
-        .navbar-nav {
-            align-items: center;
-        }
+        /* GEÇİŞLER */
+        --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
         
-        .navbar-nav .nav-link {
-            padding: 0.5rem 1rem;
-            font-weight: 500;
-            color: var(--dark-color);
-            transition: all 0.3s ease;
-            position: relative;
+        /* GRADIENTLER */
+        --gradient-primary: linear-gradient(135deg, var(--primary-500) 0%, var(--accent-500) 100%);
+        --gradient-dark: linear-gradient(135deg, var(--dark-900) 0%, var(--dark-800) 100%);
+    }
+    
+    /* TEMEL STİLLER */
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    body {
+        font-family: var(--font-main);
+        line-height: 1.6;
+        color: var(--dark-900);
+        background-color: var(--light-50);
+        overflow-x: hidden;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-heading);
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--dark-900);
+    }
+    
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2.25rem; }
+    h3 { font-size: 1.75rem; }
+    h4 { font-size: 1.5rem; }
+    
+    p {
+        margin-bottom: var(--space-sm);
+        color: var(--gray-500);
+        font-size: 1.125rem;
+        line-height: 1.7;
+    }
+    
+    a {
+        text-decoration: none;
+        color: inherit;
+        transition: color var(--transition-fast);
+    }
+    
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+    }
+    
+    ul, ol {
+        list-style: none;
+        padding-left: 0;
+    }
+    
+    /* LAYOUT */
+    .container {
+        width: 100%;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 var(--space-md);
+    }
+    
+    .section {
+        padding: var(--space-2xl) 0;
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: var(--space-xl);
+        position: relative;
+    }
+    
+    .section-title::after {
+        content: '';
+        display: block;
+        width: 5rem;
+        height: 0.375rem;
+        background: var(--gradient-primary);
+        margin: var(--space-md) auto var(--space-lg);
+        border-radius: var(--radius-full);
+    }
+    
+    /* KOMPONENTLER */
+    /* Butonlar */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-xs) var(--space-lg);
+        border-radius: var(--radius-lg);
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all var(--transition-normal);
+        border: 2px solid transparent;
+        gap: var(--space-2xs);
+    }
+    
+    .btn-primary {
+        background: var(--gradient-primary);
+        color: var(--white);
+        box-shadow: var(--shadow-primary);
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .btn-outline {
+        background-color: transparent;
+        border-color: var(--primary-500);
+        color: var(--primary-500);
+    }
+    
+    .btn-outline:hover {
+        background-color: var(--primary-500);
+        color: var(--white);
+    }
+    
+    /* Navbar */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: var(--shadow-sm);
+        z-index: 1000;
+        padding: var(--space-sm) 0;
+        transition: all var(--transition-normal);
+    }
+    
+    .navbar.scrolled {
+        padding: var(--space-2xs) 0;
+        box-shadow: var(--shadow-md);
+    }
+    
+    .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--dark-900);
+        font-family: var(--font-heading);
+        display: flex;
+        align-items: center;
+        gap: var(--space-2xs);
+    }
+    
+    .logo span {
+        color: var(--primary-500);
+    }
+    
+    .nav-links {
+        display: flex;
+        gap: var(--space-lg);
+    }
+    
+    .nav-links a {
+        color: var(--dark-900);
+        font-weight: 500;
+        position: relative;
+        padding: var(--space-2xs) 0;
+        font-size: 1.05rem;
+    }
+    
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--gradient-primary);
+        transition: width var(--transition-normal);
+    }
+    
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+    
+    .menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--dark-900);
+        cursor: pointer;
+        z-index: 1001;
+    }
+    
+    /* Hero Section */
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 5rem;
+        background: linear-gradient(135deg, rgba(248, 250, 252, 0.98) 0%, rgba(248, 250, 252, 0.92) 100%), 
+                    url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center/cover;
+    }
+    
+    .hero .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-2xl);
+        align-items: center;
+    }
+    
+    .hero-content {
+        animation: fadeInLeft var(--transition-slow);
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+        margin-bottom: var(--space-md);
+        line-height: 1.1;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.25rem;
+        color: var(--gray-500);
+        margin-bottom: var(--space-xl);
+        max-width: 90%;
+    }
+    
+    .hero-buttons {
+        display: flex;
+        gap: var(--space-md);
+        margin-top: var(--space-xl);
+    }
+    
+    .hero-image {
+        position: relative;
+        animation: fadeInRight var(--transition-slow);
+    }
+    
+    .hero-image img {
+        border-radius: var(--radius-2xl);
+        box-shadow: var(--shadow-xl);
+        transform: perspective(1000px) rotateY(-10deg);
+        transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    }
+    
+    .hero-image:hover img {
+        transform: perspective(1000px) rotateY(0deg);
+        box-shadow: var(--shadow-2xl);
+    }
+    
+    /* İstatistikler */
+    .stats {
+        background-color: var(--white);
+        padding: var(--space-xl) 0;
+    }
+    
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-md);
+        text-align: center;
+    }
+    
+    .stat-item {
+        padding: var(--space-lg);
+        background: var(--light-50);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary-500);
+        margin-bottom: var(--space-2xs);
+    }
+    
+    .stat-label {
+        color: var(--gray-500);
+        font-weight: 500;
+    }
+    
+    /* Hizmetler */
+    .services {
+        background-color: var(--white);
+    }
+    
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: var(--space-lg);
+    }
+    
+    .service-card {
+        background: var(--white);
+        border-radius: var(--radius-xl);
+        padding: var(--space-xl);
+        box-shadow: var(--shadow-md);
+        transition: all var(--transition-normal);
+        text-align: center;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--gradient-primary);
+        opacity: 0;
+        z-index: -1;
+        transition: opacity var(--transition-normal);
+    }
+    
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+        color: var(--white);
+    }
+    
+    .service-card:hover::before {
+        opacity: 1;
+    }
+    
+    .service-card:hover p {
+        color: rgba(255,255,255,0.9);
+    }
+    
+    .service-icon {
+        font-size: 2.5rem;
+        margin-bottom: var(--space-md);
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        transition: all var(--transition-normal);
+    }
+    
+    .service-card:hover .service-icon {
+        color: var(--white);
+    }
+    
+    /* Nasıl Çalışır? */
+    .workflow {
+        background-color: var(--light-100);
+        padding: var(--space-2xl) 0;
+        display: none; /* Başlangıçta gizli */
+    }
+    
+    .workflow.active {
+        display: block; /* Form gönderildiğinde göster */
+    }
+    
+    .steps {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xl);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .step {
+        display: flex;
+        gap: var(--space-lg);
+        align-items: flex-start;
+    }
+    
+    .step-number {
+        background: var(--gradient-primary);
+        color: var(--white);
+        width: 3rem;
+        height: 3rem;
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+    
+    .step-content {
+        background: var(--white);
+        padding: var(--space-lg);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        flex-grow: 1;
+    }
+    
+    .step-content h3 {
+        margin-bottom: var(--space-sm);
+        color: var(--primary-600);
+    }
+    
+    /* Portfolyo */
+    .portfolio {
+        background-color: var(--white);
+    }
+    
+    .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+        gap: var(--space-md);
+        margin-top: var(--space-xl);
+    }
+    
+    .portfolio-item {
+        position: relative;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        aspect-ratio: 16/9;
+    }
+    
+    .portfolio-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--transition-slow);
+    }
+    
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: var(--space-xl);
+        color: var(--white);
+        opacity: 0;
+        transition: opacity var(--transition-normal);
+    }
+    
+    .portfolio-item:hover .overlay {
+        opacity: 1;
+    }
+    
+    .portfolio-item:hover img {
+        transform: scale(1.08);
+    }
+    
+    .overlay h3 {
+        color: var(--white);
+        margin-bottom: var(--space-2xs);
+        font-size: 1.25rem;
+    }
+    
+    .overlay p {
+        color: rgba(255,255,255,0.8);
+        font-size: 0.875rem;
+    }
+    
+    /* Fiyatlandırma */
+    .pricing {
+        background-color: var(--light-100);
+    }
+    
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-lg);
+        margin-top: var(--space-xl);
+    }
+    
+    .pricing-card {
+        background: var(--white);
+        border-radius: var(--radius-xl);
+        padding: var(--space-xl);
+        box-shadow: var(--shadow-md);
+        transition: all var(--transition-normal);
+        position: relative;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .pricing-card.featured {
+        border: 2px solid var(--primary-500);
+        transform: scale(1.02);
+    }
+    
+    .pricing-card.featured::before {
+        content: 'Popüler';
+        position: absolute;
+        top: -12px;
+        right: var(--space-lg);
+        background: var(--gradient-primary);
+        color: var(--white);
+        padding: var(--space-3xs) var(--space-sm);
+        border-radius: var(--radius-full);
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+    
+    .price {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: var(--space-md);
+        color: var(--dark-900);
+    }
+    
+    .price span {
+        font-size: 1rem;
+        color: var(--gray-500);
+        font-weight: 400;
+    }
+    
+    .features {
+        margin-bottom: var(--space-xl);
+    }
+    
+    .features li {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2xs);
+        margin-bottom: var(--space-xs);
+        color: var(--gray-500);
+    }
+    
+    .features li i {
+        color: var(--success-500);
+    }
+    
+    /* Müşteri Yorumları */
+    .testimonials {
+        background-color: var(--light-100);
+    }
+    
+    .testimonials-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: var(--space-lg);
+    }
+    
+    .testimonial-card {
+        background: var(--white);
+        border-radius: var(--radius-xl);
+        padding: var(--space-xl);
+        box-shadow: var(--shadow-md);
+        position: relative;
+    }
+    
+    .testimonial-card::before {
+        content: '"';
+        position: absolute;
+        top: 1rem;
+        left: 1.5rem;
+        font-size: 5rem;
+        font-family: serif;
+        color: var(--primary-100);
+        z-index: 0;
+    }
+    
+    .testimonial-content {
+        position: relative;
+        z-index: 1;
+        margin-bottom: var(--space-md);
+        font-style: italic;
+        color: var(--gray-500);
+    }
+    
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+    }
+    
+    .author-image {
+        width: 50px;
+        height: 50px;
+        border-radius: var(--radius-full);
+        overflow: hidden;
+    }
+    
+    .author-info h4 {
+        font-size: 1.125rem;
+        margin-bottom: var(--space-3xs);
+    }
+    
+    .author-info p {
+        color: var(--gray-400);
+        font-size: 0.875rem;
+        margin-bottom: 0;
+    }
+    
+    /* SSS */
+    .faq {
+        background-color: var(--white);
+    }
+    
+    .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .faq-item {
+        margin-bottom: var(--space-md);
+        border: 1px solid var(--light-100);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+    }
+    
+    .faq-question {
+        padding: var(--space-md);
+        background-color: var(--light-50);
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .faq-answer {
+        padding: var(--space-md);
+        display: none;
+    }
+    
+    .faq-item.active .faq-answer {
+        display: block;
+    }
+    
+    /* İletişim */
+    .contact {
+        background: var(--gradient-dark);
+        color: var(--white);
+    }
+    
+    .contact .section-title {
+        color: var(--white);
+    }
+    
+    .contact .section-title::after {
+        background: var(--accent-500);
+    }
+    
+    .contact-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: var(--space-2xl);
+        margin-top: var(--space-xl);
+    }
+    
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-lg);
+    }
+    
+    .info-item {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-md);
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(12px);
+        padding: var(--space-md);
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all var(--transition-normal);
+    }
+    
+    .info-item:hover {
+        transform: translateY(-4px);
+        background: rgba(255, 255, 255, 0.12);
+    }
+    
+    .info-item i {
+        font-size: 1.5rem;
+        color: var(--accent-400);
+        margin-top: var(--space-3xs);
+    }
+    
+    .info-content p {
+        color: rgba(255,255,255,0.8);
+        margin-bottom: 0;
+    }
+    
+    .social-links {
+        display: flex;
+        gap: var(--space-sm);
+        margin-top: var(--space-md);
+    }
+    
+    .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: var(--radius-full);
+        background-color: rgba(255,255,255,0.1);
+        color: var(--white);
+        transition: all var(--transition-fast);
+        font-size: 1.25rem;
+    }
+    
+    .social-links a:hover {
+        background-color: var(--accent-500);
+        color: var(--white);
+        transform: translateY(-3px);
+    }
+    
+    .contact-form {
+        background: var(--white);
+        padding: var(--space-xl);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-xl);
+    }
+    
+    .form-group {
+        margin-bottom: var(--space-md);
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: var(--space-2xs);
+        font-weight: 500;
+        color: var(--dark-800);
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: var(--space-xs) var(--space-sm);
+        border: 1px solid var(--light-100);
+        border-radius: var(--radius-md);
+        font-family: var(--font-main);
+        transition: all var(--transition-fast);
+        font-size: 1rem;
+        background-color: var(--light-50);
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary-400);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        background-color: var(--white);
+    }
+    
+    .form-group textarea {
+        min-height: 150px;
+        resize: vertical;
+    }
+    
+    /* Modal */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--transition-normal);
+    }
+    
+    .modal.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .modal-content {
+        background-color: var(--white);
+        border-radius: var(--radius-xl);
+        padding: var(--space-xl);
+        max-width: 500px;
+        width: 90%;
+        box-shadow: var(--shadow-2xl);
+        transform: translateY(20px);
+        transition: transform var(--transition-normal);
+    }
+    
+    .modal.active .modal-content {
+        transform: translateY(0);
+    }
+    
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-md);
+    }
+    
+    .modal-header h3 {
+        color: var(--primary-600);
+    }
+    
+    .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--gray-500);
+        transition: color var(--transition-fast);
+    }
+    
+    .modal-close:hover {
+        color: var(--danger-500);
+    }
+    
+    .modal-body {
+        margin-bottom: var(--space-lg);
+    }
+    
+    .modal-body p {
+        color: var(--gray-500);
+        margin-bottom: var(--space-md);
+    }
+    
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--space-sm);
+    }
+    
+    /* Form Bildirimi */
+    .form-notification {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background-color: var(--success-500);
+        color: var(--white);
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        z-index: 2000;
+        transform: translateX(120%);
+        transition: transform var(--transition-normal);
+    }
+    
+    .form-notification.active {
+        transform: translateX(0);
+    }
+    
+    .form-notification i {
+        font-size: 1.5rem;
+    }
+    
+    /* Footer */
+    .footer {
+        background-color: var(--dark-900);
+        color: var(--white);
+        padding: var(--space-2xl) 0 var(--space-xl);
+    }
+    
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: var(--space-2xl);
+        margin-bottom: var(--space-2xl);
+    }
+    
+    .footer-logo {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+    
+    .footer-logo .logo {
+        font-size: 1.75rem;
+    }
+    
+    .footer-logo p {
+        color: rgba(255,255,255,0.7);
+        font-size: 1rem;
+    }
+    
+    .footer-links h3,
+    .footer-services h3 {
+        font-size: 1.25rem;
+        margin-bottom: var(--space-md);
+        color: var(--white);
+    }
+    
+    .footer-links ul,
+    .footer-services ul {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+    
+    .footer-links a,
+    .footer-services a {
+        color: rgba(255,255,255,0.7);
+        transition: color var(--transition-fast);
+        font-size: 1rem;
+    }
+    
+    .footer-links a:hover,
+    .footer-services a:hover {
+        color: var(--white);
+    }
+    
+    .copyright {
+        text-align: center;
+        padding-top: var(--space-lg);
+        border-top: 1px solid rgba(255,255,255,0.1);
+        color: rgba(255,255,255,0.7);
+        font-size: 0.875rem;
+    }
+    
+    /* Animasyonlar */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes fadeInLeft {
+        from { 
+            opacity: 0;
+            transform: translateX(-20px);
         }
-        
-        .navbar-nav .nav-link:hover {
-            color: var(--primary-color);
+        to { 
+            opacity: 1;
+            transform: translateX(0);
         }
-        
-        .navbar-nav .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary-color);
-            transition: width 0.3s ease;
+    }
+    
+    @keyframes fadeInRight {
+        from { 
+            opacity: 0;
+            transform: translateX(20px);
         }
-        
-        .navbar-nav .nav-link:hover::after {
-            width: 100%;
+        to { 
+            opacity: 1;
+            transform: translateX(0);
         }
-        
-        /* Auth Butonları */
-        #authButtons .btn {
-            padding: 8px 20px;
-            font-weight: 500;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-        }
-        
-        #authButtons .btn-outline-primary {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-        
-        #authButtons .btn-outline-primary:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        /* User Section */
-        #userSection {
-            display: flex;
-            align-items: center;
-        }
-        
-        #usernameDisplay {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        
-        /* Responsive Ayarlar */
-        @media (max-width: 991.98px) {
-            .navbar-nav {
-                margin-top: 1rem;
-                padding-top: 1rem;
-                border-top: 1px solid rgba(0,0,0,0.1);
-            }
-            
-            .navbar-nav .nav-item {
-                margin-bottom: 0.5rem;
-            }
-            
-            #authButtons, #userSection {
-                margin-top: 1rem;
-                margin-left: 0 !important;
-                justify-content: flex-start;
-            }
-            
-            #authButtons .btn {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-            
-            #authButtons .btn:last-child {
-                margin-bottom: 0;
-            }
-        }
-        
-        /* Hero Section */
-        .hero-section {
-            background: var(--gradient);
-            color: white;
-            padding: 100px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80') center/cover;
-            opacity: 0.1;
-        }
-        
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Responsive Tasarım */
+    @media (max-width: 1024px) {
+        .hero .container {
+            grid-template-columns: 1fr;
+            text-align: center;
         }
         
         .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .service-card {
-            border: none;
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
-            background-color: white;
+        .hero-image {
+            order: -1;
+            margin-bottom: var(--space-2xl);
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        .hero-buttons {
+            justify-content: center;
         }
         
-        .service-header {
-            background: var(--gradient);
-            color: white;
-            padding: 25px;
-            text-align: center;
-            position: relative;
+        .stats-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .nav-links {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            height: 100vh;
+            background-color: var(--white);
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: var(--space-md);
+            transition: left var(--transition-normal);
+            box-shadow: var(--shadow-xl);
+            padding: var(--space-2xl) var(--space-xl);
+            z-index: 1000;
         }
         
-        .service-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-        
-        .service-price {
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 15px 0;
-        }
-        
-        .service-features {
-            padding: 25px;
-        }
-        
-        .service-features li {
-            margin-bottom: 12px;
-            padding-left: 30px;
-            position: relative;
-        }
-        
-        .service-features li::before {
-            content: "\f00c";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            color: var(--success-color);
-            position: absolute;
+        .nav-links.active {
             left: 0;
         }
         
-        .btn-primary {
-            background: var(--gradient);
-            border: none;
-            border-radius: 50px;
-            padding: 12px 30px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
+        .menu-toggle {
+            display: block;
         }
         
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+        
+        .section {
+            padding: var(--space-xl) 0;
         }
         
-        .feature-box {
-            text-align: center;
-            padding: 30px;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            margin-bottom: 30px;
+        .step {
+            flex-direction: column;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .hero-title {
+            font-size: 2.25rem;
         }
         
-        .feature-box:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        .hero-subtitle {
+            font-size: 1.125rem;
         }
         
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
+        .portfolio-grid {
+            grid-template-columns: 1fr;
         }
         
-        footer {
-            background-color: var(--dark-color);
-            color: white;
-            padding: 60px 0 20px;
+        .hero-buttons {
+            flex-direction: column;
+            gap: var(--space-sm);
         }
         
-        .social-icons a {
-            color: white;
-            font-size: 1.5rem;
-            margin-right: 15px;
-            transition: all 0.3s ease;
+        .hero-buttons .btn {
+            width: 100%;
         }
         
-        .social-icons a:hover {
-            color: var(--secondary-color);
-            transform: translateY(-5px);
+        .stats-container {
+            grid-template-columns: 1fr;
         }
         
-        .floating {
-            animation: floating 3s ease-in-out infinite;
+        .modal-footer {
+            flex-direction: column;
         }
-        
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(108, 92, 231, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(108, 92, 231, 0); }
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-        }
+    }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <!-- Navbar -->
+    <nav class="navbar">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-server me-2"></i>SefirCommunity
+            <a href="#" class="logo">
+                <i class="fas fa-crown"></i>
+                <span>SefirCommunity</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#services">Hizmetler</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#features">Özellikler</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">Hakkımızda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">İletişim</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="control.html">Hesap Paneliniz</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="fatura.html">Fatura Kes</a>
-                    </li>
-
-
-                <div id="authButtons" class="ms-3">
-                    <button class="btn btn-primary" onclick="showRegisterModal()">
-                        <i class="fas fa-user-plus me-2"></i>Kayıt Ol
-                    </button>
-                    <button class="btn btn-outline-primary ms-2" onclick="showLoginModal()">
-                        <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
-                    </button>
-                </div>
-                <div id="userSection" style="display: none;" class="ms-3">
-                    <span class="me-3">Hoş geldiniz, <span id="usernameDisplay"></span></span>
-                    <button class="btn btn-danger" onclick="logout()">
-                        <i class="fas fa-sign-out-alt me-2"></i>Çıkış Yap
-                    </button>
-                </div>
-            </div>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Ana Sayfa</a></li>
+                <li><a href="#services">Hizmetler</a></li>
+                <li><a href="#workflow">Nasıl Çalışır?</a></li>
+                <li><a href="#portfolio">Portfolyo</a></li>
+                <li><a href="#pricing">Fiyatlar</a></li>
+                <li><a href="#contact">İletişim</a></li>
+            </ul>
         </div>
     </nav>
-    
+
     <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container position-relative">
-            <div class="row align-items-center">
-                <div class="col-lg-6 animate__animated animate__fadeInLeft">
-                    <h1 class="hero-title">Premium Paket Hizmetleri</h1>
-                    <p class="hero-subtitle">Web siteniz için hızlı, güvenli ve profesyonel çözümler</p>
-                    <a href="#services" class="btn btn-light btn-lg me-3">
-                        <i class="fas fa-eye me-2"></i>Hizmetlerimiz
-                    </a>
-                    <a href="#contact" class="btn btn-outline-light btn-lg">
-                        <i class="fas fa-headset me-2"></i>Destek
-                    </a>
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Profesyonel Dijital Çözümler</h1>
+                <p class="hero-subtitle">SefirCommunity olarak size özel logo tasarımı, web site yazılımı ve Instagram destek hizmetleri sunuyoruz. Dijital varlığınızı güçlendirmek için buradayız!</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Hemen Teklif Al</a>
+                    <a href="#services" class="btn btn-outline">Hizmetlerimiz</a>
                 </div>
-                <div class="col-lg-6 animate__animated animate__fadeInRight">
-                    <img src="https://images.unsplash.com/photo-1610563166150-b34df4f3bcd6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1376&q=80" class="img-fluid floating" alt="Server Illustration">
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Dijital Çözümler">
+            </div>
+        </div>
+    </section>
+
+    <!-- İstatistikler -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Mutlu Müşteri</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">300+</div>
+                    <div class="stat-label">Tamamlanan Proje</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">Yıl Deneyim</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Destek</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-5 bg-light">
+    <!-- Hizmetler -->
+    <section class="section services" id="services">
         <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="display-4 fw-bold">Hizmetlerimiz</h2>
-                <p class="lead text-muted">İhtiyacınıza uygun çözümler sunuyoruz</p>
-            </div>
-            
-            <div class="row">
-                <!-- Logo Tasarım -->
-                <div class="col-lg-4">
-                    <div class="service-card animate__animated animate__fadeInUp">
-                        <div class="service-header">
-                            <div class="service-icon">
-                                <i class="fas fa-paint-brush"></i>
-                            </div>
-                            <h3>Logo Tasarım</h3>
-                            <div class="service-price">₺299/Adet</div>
-                        </div>
-                        <div class="service-features">
-                            <ul>
-                                <li>Profesyonel Logo Tasarımı</li>
-                                <li>Sıfırdan Özgün Çizim</li>
-                                <li>Sınırsız Revize</li>
-                                <li>Vektörel Dosya Teslimi</li>
-                                <li>7/24 Destek</li>
-                            </ul>
-                            <button class="btn btn-primary w-100 mt-3 pulse" onclick="showPurchaseModal(1)">
-                                <i class="fas fa-shopping-cart me-2"></i>Satın Al
-                            </button>
-                        </div>
+            <h2 class="section-title">Hizmetlerimiz</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-palette"></i>
                     </div>
+                    <h3>Logo Tasarım</h3>
+                    <p>Markanızı en iyi şekilde yansıtan, özgün ve profesyonel logo tasarımları hazırlıyoruz. Her sektöre uygun, modern ve akılda kalıcı logolar.</p>
                 </div>
-                
-                <!-- Web Site Yazılım -->
-                <div class="col-lg-4">
-                    <div class="service-card animate__animated animate__fadeInUp animate__delay-1s">
-                        <div class="service-header">
-                            <div class="service-icon">
-                                <i class="fas fa-code"></i>
-                            </div>
-                            <h3>Web Site Yazılım</h3>
-                            <div class="service-price">₺900/Adet</div>
-                        </div>
-                        <div class="service-features">
-                            <ul>
-                                <li>Profesyonel Web Tasarım</li>
-                                <li>Responsive Tasarım</li>
-                                <li>SEO Optimizasyon</li>
-                                <li>7/24 Canlı Destek</li>
-                                <li>Ücretsiz Bakım</li>
-                            </ul>
-                            <button class="btn btn-primary w-100 mt-3 pulse" onclick="showPurchaseModal(2)">
-                                <i class="fas fa-shopping-cart me-2"></i>Satın Al
-                            </button>
-                        </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-code"></i>
                     </div>
+                    <h3>Web Site Yazılımı</h3>
+                    <p>Modern, hızlı ve kullanıcı dostu web siteleri geliştiriyoruz. Responsive tasarım ile tüm cihazlarda mükemmel görüntülenen web siteleri.</p>
                 </div>
-                
-                <!-- Instagram Destek -->
-                <div class="col-lg-4">
-                    <div class="service-card animate__animated animate__fadeInUp animate__delay-2s">
-                        <div class="service-header">
-                            <div class="service-icon">
-                                <i class="fab fa-instagram"></i>
-                            </div>
-                            <h3>Instagram Destek</h3>
-                            <div class="service-price">₺250/Adet</div>
-                        </div>
-                        <div class="service-features">
-                            <ul>
-                                <li>Profesyonel Yönetim</li>
-                                <li>Hızlı Yanıt Sistemi</li>
-                                <li>7/24 Aktiflik</li>
-                                <li>Raporlama</li>
-                                <li>Kesintisiz Destek</li>
-                            </ul>
-                            <button class="btn btn-primary w-100 mt-3 pulse" onclick="showPurchaseModal(3)">
-                                <i class="fas fa-shopping-cart me-2"></i>Satın Al
-                            </button>
-                        </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fab fa-instagram"></i>
                     </div>
+                    <h3>Instagram Destek</h3>
+                    <p>Instagram hesabınızın büyümesi ve etkileşiminin artması için profesyonel destek sağlıyoruz. Organik büyüme ve hedef kitleye ulaşma garantisi.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="py-5">
+    <!-- Nasıl Çalışır? (Başlangıçta gizli) -->
+    <section class="section workflow" id="workflow">
         <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="display-4 fw-bold">Neden Biz?</h2>
-                <p class="lead text-muted">SefirCommunity ile fark yaratın</p>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="feature-box animate__animated animate__fadeIn">
-                        <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <h3>Yüksek Performans</h3>
-                        <p>SSD tabanlı sunucularımız ile yüksek hız ve performans garantisi sunuyoruz.</p>
+            <h2 class="section-title">Sipariş Süreciniz Başladı!</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Formunuz Alındı</h3>
+                        <p>Sipariş formunuz başarıyla alındı. En kısa sürede sizinle iletişime geçeceğiz ve teklifimizi sunacağız.</p>
                     </div>
                 </div>
-                
-                <div class="col-md-4">
-                    <div class="feature-box animate__animated animate__fadeIn animate__delay-1s">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>Güvenlik</h3>
-                        <p>Gelişmiş güvenlik önlemleri ile verileriniz her zaman güvende.</p>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Onay ve Ödeme</h3>
+                        <p>Teklifimizi onayladıktan sonra ödeme işlemini gerçekleştirin. Ödeme sonrası süreç hemen başlar.</p>
                     </div>
                 </div>
-                
-                <div class="col-md-4">
-                    <div class="feature-box animate__animated animate__fadeIn animate__delay-2s">
-                        <div class="feature-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <h3>7/24 Destek</h3>
-                        <p>Uzman ekibimiz her zaman yanınızda. 7 gün 24 saat destek hizmeti.</p>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Çalışmalar Başlıyor</h3>
+                        <p>Size sunacağımız taslakları inceleyin, geri bildirimlerinizi paylaşın. İstediğiniz revizyonları yapalım.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Son Teslimat</h3>
+                        <p>Son halini onayladıktan sonra tüm dosyaları ve erişim bilgilerini size teslim edelim. Süreç boyunca yanınızdayız!</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-5 bg-light">
+    <!-- Portfolyo -->
+    <section class="section portfolio" id="portfolio">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" class="img-fluid rounded-3 shadow" alt="Our Team">
+            <h2 class="section-title">Portfolyo</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Logo Tasarımı">
+                    <div class="overlay">
+                        <h3>Cafe Delight</h3>
+                        <p>Restoran için modern logo tasarımı</p>
+                    </div>
                 </div>
-                <div class="col-lg-6 mt-5 mt-lg-0">
-                    <h2 class="fw-bold mb-4">SefirCommunity Hakkında</h2>
-                    <p class="lead">10 yılı aşkın deneyimimizle sektörde lider konumdayız.</p>
-                    <p>Müşteri memnuniyetini her şeyin üzerinde tutan anlayışımızla, her geçen gün daha fazla kullanıcıya hizmet vermenin gururunu yaşıyoruz. Uzman ekibimiz ve son teknoloji altyapımızla sizlere en iyi hizmeti sunmak için çalışıyoruz.</p>
-                    <div class="d-flex align-items-center mt-4">
-                        <div class="pe-4">
-                            <h3 class="fw-bold text-primary mb-0">10K+</h3>
-                            <p class="mb-0">Mutlu Müşteri</p>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Web Sitesi">
+                    <div class="overlay">
+                        <h3>Moda Dünyası</h3>
+                        <p>E-ticaret web sitesi tasarımı</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="Instagram Yönetimi">
+                    <div class="overlay">
+                        <h3>Fitness Coach</h3>
+                        <p>Instagram büyütme ve yönetimi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fiyatlandırma -->
+    <section class="section pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Fiyatlandırma</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Logo Tasarım</h3>
+                    <div class="price">₺150 <span>/ Adet</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> Özgün ve Profesyonel Tasarım</li>
+                        <li><i class="fas fa-check"></i> 3 Farklı Taslak Seçeneği</li>
+                        <li><i class="fas fa-check"></i> 2 Revizyon Hakkı</li>
+                        <li><i class="fas fa-check"></i> Vektörel Dosya (AI, EPS)</li>
+                        <li><i class="fas fa-check"></i> PNG & JPG Formatlarında Teslim</li>
+                        <li><i class="fas fa-check"></i> 1 Hafta Teslimat Süresi</li>
+                    </ul>
+                    <button class="btn btn-outline order-btn" data-service="Logo Tasarım" data-price="150">Sipariş Ver</button>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Web Site Yazılımı</h3>
+                    <div class="price">₺900 <span>/ Adet</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> Responsive ve Modern Tasarım</li>
+                        <li><i class="fas fa-check"></i> 5 Sayfa (Ana Sayfa, Hakkımızda, Hizmetler, Blog, İletişim)</li>
+                        <li><i class="fas fa-check"></i> SEO Optimizasyonu</li>
+                        <li><i class="fas fa-check"></i> 1 Aylık Ücretsiz Destek</li>
+                        <li><i class="fas fa-check"></i> Hosting ve Domain Kurulumu</li>
+                        <li><i class="fas fa-check"></i> 2 Hafta Teslimat Süresi</li>
+                    </ul>
+                    <button class="btn btn-primary order-btn" data-service="Web Site Yazılımı" data-price="900">Sipariş Ver</button>
+                </div>
+                <div class="pricing-card">
+                    <h3>Instagram Destek</h3>
+                    <div class="price">₺250 <span>/ Adet</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> Profesyonel Hesap Yönetimi</li>
+                        <li><i class="fas fa-check"></i> İçerik Planlaması ve Takvimi</li>
+                        <li><i class="fas fa-check"></i> Etkileşim Artırma Stratejileri</li>
+                        <li><i class="fas fa-check"></i> Haftalık Performans Raporu</li>
+                        <li><i class="fas fa-check"></i> 1 Ay Süreli Hizmet</li>
+                        <li><i class="fas fa-check"></i> Organik Büyüme Garantisi</li>
+                    </ul>
+                    <button class="btn btn-outline order-btn" data-service="Instagram Destek" data-price="250">Sipariş Ver</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Müşteri Yorumları -->
+    <section class="section testimonials">
+        <div class="container">
+            <h2 class="section-title">Müşteri Yorumları</h2>
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>SefirCommunity ile logo tasarımı için çalıştık. Süreç boyunca çok profesyonel ve hızlıydılar. Tasarladıkları logo tam olarak istediğim gibi oldu. Kesinlikle tavsiye ederim!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Müşteri">
                         </div>
-                        <div class="pe-4">
-                            <h3 class="fw-bold text-primary mb-0">99.9%</h3>
-                            <p class="mb-0">Uptime</p>
+                        <div class="author-info">
+                            <h4>Zeynep Kaya</h4>
+                            <p>Cafe Delight</p>
                         </div>
-                        <div>
-                            <h3 class="fw-bold text-primary mb-0">7/24</h3>
-                            <p class="mb-0">Destek</p>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Web sitemizi SefirCommunity'e yaptırdık. Mobil uyumlu, hızlı ve kullanıcı dostu bir site oluşturdular. Satışlarımız web sitemizden sonra %40 arttı. Teşekkürler!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="Müşteri">
+                        </div>
+                        <div class="author-info">
+                            <h4>Emre Yılmaz</h4>
+                            <p>Moda Dünyası</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Instagram hesabımın yönetimini SefirCommunity'e bıraktım. 1 ay içinde takipçi sayım 2 katına çıktı ve etkileşimim çok arttı. Çok memnun kaldım!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Müşteri">
+                        </div>
+                        <div class="author-info">
+                            <h4>Deniz Arslan</h4>
+                            <p>Fitness Coach</p>
                         </div>
                     </div>
                 </div>
@@ -532,266 +1394,385 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-5">
+    <!-- SSS -->
+    <section class="section faq">
         <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="display-4 fw-bold">İletişim</h2>
-                <p class="lead text-muted">Bize ulaşın, size yardımcı olalım</p>
-            </div>
-            
-            <div class="row">
-                <div class="col-lg-6">
-                    <form>
-                        <div class="mb-3">
-                            <input type="text" class="form-control form-control-lg" placeholder="Adınız">
-                        </div>
-                        <div class="mb-3">
-                            <input type="email" class="form-control form-control-lg" placeholder="E-posta Adresiniz">
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control form-control-lg" placeholder="Konu">
-                        </div>
-                        <div class="mb-3">
-                            <textarea class="form-control form-control-lg" rows="5" placeholder="Mesajınız"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-lg w-100">
-                            <i class="fas fa-paper-plane me-2"></i>Gönder
-                        </button>
-                    </form>
-                </div>
-                <div class="col-lg-6 mt-5 mt-lg-0">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <h3 class="fw-bold mb-4">İletişim Bilgileri</h3>
-                            <div class="d-flex align-items-start mb-4">
-                                <div class="me-3 text-primary">
-                                    <i class="fas fa-map-marker-alt fa-2x"></i>
-                                </div>
-                                <div>
-                                    <h5 class="fw-bold mb-1">Adres</h5>
-                                    <p class="mb-0">İstanbul, Türkiye</p>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-start mb-4">
-                                <div class="me-3 text-primary">
-                                    <i class="fas fa-phone-alt fa-2x"></i>
-                                </div>
-                                <div>
-                                    <h5 class="fw-bold mb-1">Telefon</h5>
-                                    <p class="mb-0">+90 555 123 45 67</p>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-start mb-4">
-                                <div class="me-3 text-primary">
-                                    <i class="fas fa-envelope fa-2x"></i>
-                                </div>
-                                <div>
-                                    <h5 class="fw-bold mb-1">E-posta</h5>
-                                    <p class="mb-0">info@SefirCommunity.com</p>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-start">
-                                <div class="me-3 text-primary">
-                                    <i class="fas fa-clock fa-2x"></i>
-                                </div>
-                                <div>
-                                    <h5 class="fw-bold mb-1">Çalışma Saatleri</h5>
-                                    <p class="mb-0">Pazartesi - Cumartesi: 09:00 - 18:00</p>
-                                    <div> <h5 class="fw-bold mb-1">Not!</h5>
-                                        <p class="mb-0">Sağ Alt Köşedeki Canlı Destek Sisteminden Mesaj Atmanız Rica Buyurulur</p></div>
-                                </div>
-                            </div>
-                        </div>
+            <h2 class="section-title">Sıkça Sorulan Sorular</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Logo tasarım süreci nasıl işliyor?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Logo tasarım sürecimiz şu şekilde işler: Öncelikle sizden markanız hakkında bilgi alırız. Ardından 3 farklı taslak hazırlayıp size sunarız. Seçtiğiniz taslak üzerinde 2 revizyon hakkınızı kullanarak son halini oluştururuz. Tüm dosyaları (PNG, JPG, vektörel) teslim ederiz.</p>
                     </div>
                 </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Web sitemin teslim süresi ne kadar?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Standart bir web sitesinin teslim süresi 2 haftadır. Ancak karmaşık projelerde bu süre uzayabilir. Proje başlangıcında size net bir teslim tarihi veririz ve bu tarihe bağlı kalırız.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Instagram destek hizmeti nasıl çalışıyor?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Instagram destek hizmetimizde hesabınızı 1 ay boyunca profesyonel şekilde yönetiyoruz. İçerik planlaması yapıyor, etkileşim stratejileri uyguluyor ve haftalık performans raporları sunuyoruz. Organik büyümeyi hedefliyoruz, bot veya sahte takipçi kullanmıyoruz.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Ödeme yöntemleri nelerdir?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Banka havalesi, EFT, kredi kartı ve PayPal ile ödeme kabul ediyoruz. Proje başlangıcında %50 depozito alıyoruz, kalan tutarı proje tesliminde tahsil ediyoruz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- İletişim -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">İletişim</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="info-content">
+                            <h4>E-posta</h4>
+                            <p>info@sefircommunity.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fab fa-instagram"></i>
+                        <div class="info-content">
+                            <h4>Instagram</h4>
+                            <p>@sefircommunity</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fab fa-discord"></i>
+                        <div class="info-content">
+                            <h4>Discord</h4>
+                            <p>https://discord.gg/Gpz4Ucwh</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="info-content">
+                            <h4>Çalışma Saatleri</h4>
+                            <p>Pazartesi - Cuma: 09:00 - 18:00</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <input type="hidden" id="selectedService" name="service">
+                    <div class="form-group">
+                        <label for="name">Adınız</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-posta</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Hizmet</label>
+                        <select id="service" name="service" required>
+                            <option value="">Bir hizmet seçin</option>
+                            <option value="logo-tasarim">Logo Tasarım (₺150)</option>
+                            <option value="web-site">Web Site Yazılımı (₺900)</option>
+                            <option value="instagram-destek">Instagram Destek (₺250)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Proje Detayları</label>
+                        <textarea id="message" name="message" required placeholder="İhtiyaçlarınızı, beklentilerinizi ve özel isteklerinizi detaylı şekilde belirtin..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Teklif Al</button>
+                </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-5">
+    <footer class="footer">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4 mb-lg-0">
-                    <h3 class="fw-bold mb-4">
-                        <i class="fas fa-server me-2"></i>SefirCommunity
-                    </h3>
-                    <p>Web siteniz için hızlı, güvenli ve profesyonel çözümler sunuyoruz</p>
-                    <div class="social-icons mt-4">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://discord.gg/vCuuD4vcbx"><i class="fab fa-discord"></i></a>
-                    </div>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="#" class="logo">
+                        <i class="fas fa-crown"></i>
+                        <span>SefirCommunity</span>
+                    </a>
+                    <p>Profesyonel dijital çözümler ile markanızı bir sonraki seviyeye taşıyoruz.</p>
                 </div>
-                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-                    <h5 class="fw-bold mb-4">Hızlı Linkler</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Anasayfa</a></li>
-                        <li class="mb-2"><a href="#services" class="text-white-50 text-decoration-none">Hizmetler</a></li>
-                        <li class="mb-2"><a href="#features" class="text-white-50 text-decoration-none">Özellikler</a></li>
-                        <li class="mb-2"><a href="#about" class="text-white-50 text-decoration-none">Hakkımızda</a></li>
-                        <li class="mb-2"><a href="control.html" class="text-white-50 text-decoration-none">Hesap Bilgileriniz</a></li>
-                        <li class="mb-2"><a href="#contact" class="text-white-50 text-decoration-none">İletişim</a></li>
+                <div class="footer-links">
+                    <h3>Hızlı Linkler</h3>
+                    <ul>
+                        <li><a href="#home">Ana Sayfa</a></li>
+                        <li><a href="#services">Hizmetler</a></li>
+                        <li><a href="#workflow">Nasıl Çalışır?</a></li>
+                        <li><a href="#portfolio">Portfolyo</a></li>
+                        <li><a href="#pricing">Fiyatlar</a></li>
+                        <li><a href="#contact">İletişim</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-                    <h5 class="fw-bold mb-4">Hizmetler</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Logo Tasarım</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Web Yazılım</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Instagram Destek</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">SEO Hizmetleri</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">SSL Sertifikaları</a></li>
+                <div class="footer-links">
+                    <h3>Hizmetler</h3>
+                    <ul>
+                        <li><a href="#">Logo Tasarım</a></li>
+                        <li><a href="#">Web Site Yazılımı</a></li>
+                        <li><a href="#">Instagram Destek</a></li>
                     </ul>
-                </div>
-                <div class="col-lg-4">
-                    <h5 class="fw-bold mb-4">Bültenimize Abone Olun</h5>
-                    <p>Yeni hizmetlerimiz ve kampanyalarımızdan haberdar olun.</p>
-                    <form class="mt-4">
-                        <div class="input-group">
-                            <input type="email" class="form-control" placeholder="E-posta Adresiniz">
-                            <button class="btn btn-primary" type="button">Abone Ol</button>
-                        </div>
-                    </form>
                 </div>
             </div>
-            <hr class="my-4 bg-secondary">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0">© 2023 SefirCommunity. Tüm hakları saklıdır.</p>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <p class="mb-0">
-                        <a href="#" class="text-white-50 text-decoration-none me-3">Gizlilik Politikası</a>
-                        <a href="#" class="text-white-50 text-decoration-none">Kullanım Şartları</a>
-                    </p>
-                </div>
+            <div class="copyright">
+                <p>&copy; 2023 SefirCommunity. Tüm hakları saklıdır.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Purchase Modal -->
-    <div class="modal fade" id="purchaseModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Satın Al</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="purchaseForm">
-                        <input type="hidden" id="selectedProductId">
-                        <div class="mb-3">
-                            <label class="form-label">Ürün:</label>
-                            <input type="text" class="form-control" id="selectedProductName" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Fiyat:</label>
-                            <input type="text" class="form-control" id="selectedProductPrice" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Ödeme Yöntemi:</label>
-                            <select class="form-select" id="paymentMethod" required>
-                                <option value="">Seçiniz</option>
-                                <option value="credit_card">Kredi Kartı</option>
-                                <option value="bank_transfer">Banka Havalesi</option>
-                                <option value="paypal">PayPal</option>
-                                <option value="crypto">Kripto Para</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Notlar (Opsiyonel):</label>
-                            <textarea class="form-control" id="purchaseNotes" rows="2"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Kuponunuz:</label>
-                            <textarea class="form-control" id="purchaseNotes" rows="2" placeholder="Size Verilen Kupon Kodunu Giriniz (Opsiyonel)"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">
-                            <i class="fas fa-shopping-cart me-2"></i>Satın Alımı Tamamla
-                        </button>
-                    </form>
-                </div>
+    <!-- Sipariş Modalı -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalServiceTitle">Hizmet Siparişi</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Ödeme entegrasyonumuz olmadığı için siparişinizi tamamlamak için bize iletişim formu aracılığıyla ulaşmanız gerekmektedir.</p>
+                <p><strong>Lütfen tüm bilgileri doğru ve eksiksiz doldurun:</strong> Bu sayede size güvenip doğru işlemi yapabilelim ve sipariş sürecinizi hızlı bir şekilde başlatabilelim.</p>
+                <p>Devam et butonuna tıkladığınızda iletişim formuna yönlendirileceksiniz. Seçtiğiniz hizmet otomatik olarak seçilecektir.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelOrder">Vazgeç</button>
+                <button class="btn btn-primary" id="continueOrder">Devam Et</button>
             </div>
         </div>
     </div>
 
-    <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Giriş Yap</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="loginForm">
-                        <div class="mb-3">
-                            <label class="form-label">E-posta:</label>
-                            <input type="email" class="form-control" id="loginEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Şifre:</label>
-                            <input type="password" class="form-control" id="loginPassword" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">
-                            <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
-                        </button>
-                    </form>
-                    <div class="text-center mt-3">
-                        <p class="mb-0">Hesabınız yok mu? <a href="#" onclick="showRegisterModal()" class="text-primary">Kayıt Olun</a></p>
-                    </div>
-                </div>
-            </div>
+    <!-- Form Bildirimi -->
+    <div class="form-notification" id="formNotification">
+        <i class="fas fa-check-circle"></i>
+        <div>
+            <h4>Mesajınız Gönderildi!</h4>
+            <p>En kısa sürede sizinle iletişime geçeceğiz.</p>
         </div>
     </div>
 
-    <!-- Register Modal -->
-    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Kayıt Ol</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="registerForm">
-                        <div class="mb-3">
-                            <label class="form-label">Ad Soyad:</label>
-                            <input type="text" class="form-control" id="registerName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">E-posta:</label>
-                            <input type="email" class="form-control" id="registerEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Şifre:</label>
-                            <input type="password" class="form-control" id="registerPassword" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Şifre Tekrar:</label>
-                            <input type="password" class="form-control" id="registerPasswordConfirm" required>
-                        </div>
-                        <button type="submit" class="btn btn-success w-100">
-                            <i class="fas fa-user-plus me-2"></i>Kayıt Ol
-                        </button>
-                    </form>
-                    <div class="text-center mt-3">
-                        <p class="mb-0">Zaten hesabınız var mı? <a href="#" onclick="showLoginModal()" class="text-primary">Giriş Yapın</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- JavaScript -->
+    <script>
+        // Discord Webhook Gönderici
+        async function sendDiscordWebhook(webhookUrl, messageData) {
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(messageData),
+                });
 
-    <!-- Toast Container -->
-    <div id="toastContainer" class="position-fixed top-0 end-0 p-3" style="z-index: 1100"></div>
+                if (!response.ok) {
+                    throw new Error(`Webhook gönderilemedi: ${response.status}`);
+                }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+                console.log('Webhook başarıyla gönderildi!');
+                return true;
+            } catch (error) {
+                console.error('Webhook hatası:', error);
+                return false;
+            }
+        }
+
+        // Modal ve Sipariş İşlemleri
+        const orderModal = document.getElementById('orderModal');
+        const modalClose = document.getElementById('modalClose');
+        const cancelOrder = document.getElementById('cancelOrder');
+        const continueOrder = document.getElementById('continueOrder');
+        const modalServiceTitle = document.getElementById('modalServiceTitle');
+        const orderButtons = document.querySelectorAll('.order-btn');
+        const contactForm = document.getElementById('contactForm');
+        const formNotification = document.getElementById('formNotification');
+        const selectedServiceInput = document.getElementById('selectedService');
+        const serviceSelect = document.getElementById('service');
+        const workflowSection = document.querySelector('.workflow');
+
+        let selectedService = '';
+        let selectedPrice = '';
+
+        // Sipariş butonlarına tıklama
+        orderButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                selectedService = button.getAttribute('data-service');
+                selectedPrice = button.getAttribute('data-price');
+                
+                // Modal içeriğini güncelle
+                modalServiceTitle.textContent = `${selectedService} Siparişi (₺${selectedPrice})`;
+                
+                // Modalı göster
+                orderModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Modal kapatma
+        function closeModal() {
+            orderModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        modalClose.addEventListener('click', closeModal);
+        cancelOrder.addEventListener('click', closeModal);
+
+        // Devam et butonu
+        continueOrder.addEventListener('click', () => {
+            closeModal();
+            
+            // İletişim formuna yönlendir
+            window.location.href = '#contact';
+            
+            // Seçilen hizmeti formda seçili hale getir
+            setTimeout(() => {
+                selectedServiceInput.value = selectedService;
+                
+                // Select elementini güncelle
+                let optionValue = '';
+                if (selectedService === 'Logo Tasarım') optionValue = 'logo-tasarim';
+                else if (selectedService === 'Web Site Yazılımı') optionValue = 'web-site';
+                else if (selectedService === 'Instagram Destek') optionValue = 'instagram-destek';
+                
+                serviceSelect.value = optionValue;
+                
+                // Formu otomatik olarak biraz aşağı kaydır
+                window.scrollBy(0, 100);
+            }, 500);
+        });
+
+        // Form gönderimi
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(contactForm);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const service = formData.get('service');
+            const message = formData.get('message');
+            
+            // Discord webhook verisi
+            const discordMessage = {
+                content: `Yeni sipariş formu gönderildi!`,
+                embeds: [{
+                    title: 'Yeni Sipariş Formu',
+                    fields: [
+                        { name: 'Ad', value: name },
+                        { name: 'E-posta', value: email },
+                        { name: 'Hizmet', value: service },
+                        { name: 'Mesaj', value: message }
+                    ],
+                    timestamp: new Date().toISOString(),
+                    color: 0x6366F1
+                }]
+            };
+            
+            // Webhook URL'nizi buraya ekleyin
+            const webhookUrl = 'https://discord.com/api/webhooks/1353848010735616032/V_lGzTIkpX2fvQLs7v20h2ubd_M6dSXcKta6gac1JelX3fiCm816PkWgvSwXy26-NOTI';
+            
+            // Webhook'u gönder
+            await sendDiscordWebhook(webhookUrl, discordMessage);
+            
+            // Form bildirimini göster
+            formNotification.classList.add('active');
+            contactForm.reset();
+            
+            // "Nasıl Çalışır" bölümünü göster
+            workflowSection.classList.add('active');
+            
+            // "Nasıl Çalışır" bölümüne yönlendir
+            setTimeout(() => {
+                window.location.href = '#workflow';
+            }, 1000);
+            
+            // 5 saniye sonra bildirimi gizle
+            setTimeout(() => {
+                formNotification.classList.remove('active');
+            }, 5000);
+        });
+
+        // Mobil Menü Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Navbar Scroll Efekti
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // SSS Açma/Kapama
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+                
+                const icon = question.querySelector('i');
+                if (item.classList.contains('active')) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                } else {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+        
+        // Yumuşak scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Mobil menüyü kapat
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
